@@ -1,6 +1,3 @@
-var DEBUG           = true;
-var RAPPAD_API_PATH = DEBUG ? 'http://localhost:3000/api' : 'http://www.rappad.co/api';
-
 var App = {
   setToken: function(token) {
     localStorage.setItem('auth_token', token);
@@ -167,24 +164,22 @@ var DashboardView = Jr.View.extend({
       type: 'GET',
       data: { page: this.page, limit: this.limit },
       success: function(response) {
-        _(response.raps).each(function(rapJson, index, list) {
-          var rap       = new Rap(rapJson);
-          var rapDate   = new Date(rapJson.created_at);
-
-          // Prettify some values
-          rap.set('word_count', rapJson.lyrics.split(' ').length + ' words');
-          rap.set('pretty_date', rapDate.toDateString());
-
+        // Add the new raps to the collection
+        _(response).each(function(element, index, list) {
+          var rap = new Rap(element);
           rapView = new RapEntryView({ model: rap });
           rapView.render();
+          rapCollection.add(rap)
+
           $('.dashboard-raps').append(rapView.el);
-
           self.raps_shown++;
-
-          if (self.raps_shown >= response.total_raps) {
-            $('.show-more').hide();
-          }
         });
+
+        // If less then 25 results, then there can't be anymore to show
+        // If it is 25, then there can potentially be more
+        if (response.length < 25) {
+          $('.show-more').hide();
+        }
       },
       complete: hideLoader
     });
@@ -195,43 +190,41 @@ var DashboardView = Jr.View.extend({
     this.$el.html( $('#v-dashboard').html() )
     $('.show-more').hide();
 
-    // Instantly show all drafts
     var self = this;
     draftCollection.fetch();
 
-    // Retrieve server-side raps
     $('.dashboard-sync').addClass('active');
     $('.dashboard-sync').text('Loading your raps...');
-    $.ajax({
-      url: RAPPAD_API_PATH + '/raps',
-      type: 'GET',
+    rapCollection.fetch({
+      reset: true,
       data: {
         limit: this.limit,
-        page: this.page
+        page: this.page,
       },
-      success: function(response) {
-        _(response.raps).each(function(rapJson, index, list) {
-          var rap       = new Rap(rapJson);
-          var rapDate   = new Date(rapJson.created_at);
+      success: function(collection, response, options) {
+        // If 25 raps were returned, it's possible
+        // that there is more.
+        if (response.length >= 25) {
+          $('.show-more').show();
+        } else {
+          $('.show-more').hide();
+        }
+        $('.dashboard-sync').removeClass('active');
 
-          // Prettify some values
-          rap.set('word_count', rapJson.lyrics.split(' ').length + ' words');
-          rap.set('pretty_date', rapDate.toDateString());
-
-          rapView = new RapEntryView({ model: rap });
+        // Populate the dashboard with raps
+        _(collection.models).each(function(element, index, list) {
+          var rapView = new RapEntryView({ model: element });
           rapView.render();
           $('.dashboard-raps').append(rapView.el);
-
           self.raps_shown++;
         });
 
-        if (response.raps.length < response.total_raps) {
-          // Allow pagination
-          $('.show-more').show();
-        }
       },
-      complete: function() {
-        $('.dashboard-sync').removeClass('active');
+      error: function() {
+        $('.dashboard-sync').text('Failed to retrieve latest raps.');
+        setTimeout(function() {
+          $('.dashboard-sync').removeClass('active');
+        }, 2000);
       }
     });
 

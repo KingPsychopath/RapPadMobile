@@ -78,7 +78,6 @@ Backbone.LocalStorage.sync = window.Store.sync = Backbone.localSync = function(m
 };
 
 Backbone.ajaxSync = Backbone.sync;
-
 Backbone.getSyncMethod = function(model) {
   if(model.localStorage || (model.collection && model.collection.localStorage))
   {
@@ -92,15 +91,28 @@ Backbone.sync = function(method, model, options, error) {
   return Backbone.getSyncMethod(model).apply(this, [method, model, options, error]);
 };
 
-
 var Rap = Backbone.Model.extend({
+  initialize: function() {
+    // Add pretty-prints of certain attributes
+    if (this.attributes.lyrics) {
+      this.set('word_count', this.attributes.lyrics.split(' ').length + ' words');
+    }
+    if (this.attributes.created_at) {
+      this.set('pretty_date', (new Date(this.attributes.created_at)).toDateString());
+    }
+  },
+});
+
+var RapCollection = Backbone.Collection.extend({
+  model: Rap,
+  url: RAPPAD_API_PATH + '/raps',
 });
 
 var Draft = Backbone.Model.extend({});
-
 var DraftCollection = Backbone.Collection.extend({
   model: Draft,
   localStorage: new Backbone.LocalStorage('DraftCollection'),
 });
 
 var draftCollection = new DraftCollection();
+var rapCollection   = new RapCollection();

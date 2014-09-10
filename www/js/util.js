@@ -1,3 +1,6 @@
+var DEBUG           = true;
+var RAPPAD_API_PATH = DEBUG ? 'http://localhost:3000/api' : 'http://www.rappad.co/api';
+
 function showLoader(message) {
   message = message || 'Loading...';
 
