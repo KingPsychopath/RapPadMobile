@@ -1,0 +1,79 @@
+.dashboard-sync
+  color: #FFF
+  text-align: center
+  height: 0px
+  padding: 0
+  background: $yellow
+  font-size: 1em
+  overflow: hidden
+  -webkit-transition: height 250ms
+  &.active
+    height: 2em
+    line-height: 2em
+
+.dashboard-header
+  font-size: 1.4em
+  &.first
+    margin-top: 0
+
+.dashboard-tip
+  color: $gray
+  font-size: 1em
+  line-height: 1.4em
+
+.show-more
+  border: 1px solid $main-font-color
+  color: $main-font-color
+  text-align: center
+  background: none
+  border-radius: 4px
+  display: block
+  margin: 1em auto
+  padding: 12px
+  &:active
+    border-color: $yellow
+    color: $yellow
+
+.dashboard-raps
+  padding: 0
+  margin: 0
+  .rap-entry
+    padding: 8px 0
+    overflow: auto
+    list-style-type: none
+    border-bottom: 1px solid $gray
+    .left-column
+      width: calc(100% - 64px)
+      float: left
+    .right-column
+      width: 64px
+      float: right
+    .title
+      float: left
+      width: 100%
+      text-overflow: ellipsis
+      overflow: hidden
+      white-space: nowrap
+      font-size: 1em
+    .actions
+      float: right
+      button
+        border: 0
+        padding: 8px
+        background: none
+        color: $yellow
+        text-align: center
+        border-radius: 4px
+        float: right
+        &:active
+          border-color: $yellow
+          color: $yellow
+    .meta
+      font-size: 0.9em
+      overflow: hidden
+      float: left
+      width: 100%
+      color: $gray
+      margin-bottom: 4px
+
+

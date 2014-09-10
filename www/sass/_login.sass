@@ -1,0 +1,71 @@
+// Styles related to authentication forms
+
+.rp-login-header
+  font-family: $bebas
+  font-weight: normal
+  font-size: 4em
+  text-align: center
+  margin: 14px 0
+  text-shadow: 1px 1px 2px #000
+  .smaller
+    font-size: 0.85em
+
+.rp-login-btn
+  width: 200px
+  display: block
+  font-family: $main-font
+  font-weight: 600
+  font-size: 1em
+  text-align: left
+  color: #FFF
+  border: 2px solid #FFF
+  padding: 12px
+  background: none
+  outline: none
+  border-radius: 2px
+  text-decoration: none
+  position: relative
+  margin: 0 auto
+  &.first
+    margin-bottom: 1em
+  &.login-auth
+    margin: 0
+    float: right
+    width: 225px
+  &:active
+    color: $yellow
+    border-color: $yellow
+  &.disabled
+    color: $gray
+    border-color: $gray
+
+.auth-field
+  display: block
+  color: #FFF
+  margin-bottom: 1em
+  .auth-icon
+    width: 32px
+    padding-top: 8px
+    padding-bottom: 8px
+    display: inline-block
+    text-align: center
+    background: $gray
+    color: #FFF
+    vertical-align: top
+    border-top-left-radius: 2px
+    border-bottom-left-radius: 2px
+  input
+    width: calc(100% - 32px)
+    height: 32px
+    background: #EEE
+    border: 0
+    margin: 0
+    outline: none
+    border-top-right-radius: 2px
+    border-bottom-right-radius: 2px
+    font-size: 1em
+    padding: 7px
+    padding-bottom: 8px
+    color: $gray
+    display: inline-block
+

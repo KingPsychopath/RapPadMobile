@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <title>RapPad Mobile</title>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <meta content="" name="csrf-token" />
+    <!-- cordova requirements -->
+    <script type="text/javascript" src="cordova.js"></script>
+    <!-- libraries -->
+    <script type="text/javascript" src="lib/js/modernizr.js"></script>
+    <script type="text/javascript" src="lib/js/lodash.underscore.js"></script>
+    <script type="text/javascript" src="lib/js/zepto.js"></script>
+    <script type="text/javascript" src="lib/js/zepto.flickable.js"></script>
+    <script type="text/javascript" src="lib/js/backbone-min.js"></script>
+    <script type="text/javascript" src="lib/js/junior.js"></script>
+    <script type="text/javascript" src="lib/js/fastclick.js"></script>
+    <script type="text/javascript" src="lib/js/date.js"></script>
+    <link type="text/css" rel="stylesheet" href="lib/css/junior.css" />
+    <link type="text/css" rel="stylesheet" href="lib/css/font-awesome.css" />
+    <!-- our app -->
+    <link type="text/css" rel="stylesheet" href="css/application.css" />
+  </head>
+  <body>
+    <noscript>You appear to have Javascript disabled on your device. Please go to your device settings in order to access RapPad.</noscript>
+
+    <div id="sidebar">
+    </div>
+
+    <!-- all templates get loaded in here -->
+    <div id="app-container">
+      <div id="app-main">
+      </div>
+    </div>
+
+    <!-- templates -->
+    <script id="v-login" type="template">
+      <div class="content">
+        <h1 class="rp-login-header">
+          R<span class="smaller">ap</span>P<span class="smaller">ad</span>
+        </h1>
+        <button id="sign-in" class="rp-login-btn first">
+          Login
+          <i class="pull-right fa fa-chevron-right"></i>
+        </button>
+        <button id="sign-up" class="rp-login-btn">
+          Register
+          <i class="pull-right fa fa-chevron-right"></i>
+        </button>
+      </div>
+    </script>
+
+    <script id="v-login-auth" type="template">
+      <header class="bar-title ios">
+        <button class="prev-btn" id="prev-btn"><i class="fa fa-chevron-left"></i> </button>
+        <div class="title">Login to RapPad</div>
+      </header>
+      <div class="content">
+        <div class="padding-unit">
+          <div class="error-message">
+            Sorry! That username or password is incorrect.
+          </div>
+
+          <div class="auth-field">
+            <div class="auth-icon"><i class="fa fa-user"></i></div><!--
+            --><input id="login-name" type="textbox" placeholder="Username or Email"/>
+          </div>
+
+          <div class="auth-field">
+            <div class="auth-icon"><i class="fa fa-key"></i></div><!--
+            --><input id="login-password" type="password" placeholder="Password" />
+          </div>
+
+          <button id="login" class="rp-login-btn login-auth">
+            Get Started
+            <i class="pull-right fa fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </script>
+
+    <script id="v-dashboard" type="template">
+      <header class="bar-title ios">
+        <div class="title">Dashboard</div>
+      </header>
+      <div class="content">
+        <div class="dashboard-sync"></div>
+        <div class="padding-unit">
+          <h1 class="dashboard-header first">Your Drafts</h1>
+          <p class="dashboard-tip">Drafts are always saved on the phone first, so you can you write raps even without an internet connection. When you want you can send all your drafts to be saved on RapPad, so you can access them anywhere with an internet connection.</p>
+          <h1 class="dashboard-header">Your Raps</h1>
+          <ul class="dashboard-raps">
+          </ul>
+          <button class="show-more"></button>
+        </div>
+      </div>
+    </script>
+
+    <script id="v-rap" type="template">
+      <li class="rap-entry">
+        <div class="left-column">
+          <div class="meta">
+            <span class="date">{{ pretty_date }}</span>
+            &bullet;
+            <span class="words">{{ word_count }}</span>
+          </div>
+          <div class="title">{{ title }}</div>
+        </div>
+        <div class="right-column">
+          <div class="actions">
+            <button class="edit">Edit <i class="fa fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </li>
+    </script>
+
+    <script id="v-loader" type="template">
+      <div id="loader">
+        <div class="loader-inner">
+          <i class="fa fa-spin fa-gear"></i>
+          <p>Loading...</p>
+        </div>
+      </div>
+    </script>
+
+    <!-- our app -->
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/application.js"></script>
+    <script type="text/javascript" src="js/raps.js"></script>
+  </body>
+</html>
