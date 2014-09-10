@@ -40,6 +40,9 @@ button, input {
   border-radius: 0;
   margin: 0;
   font-size: 100%;
+  background: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 html {
@@ -280,6 +283,21 @@ header {
   line-height: 1.4em;
 }
 
+.show-more {
+  border: 1px solid #EEE;
+  color: #EEE;
+  text-align: center;
+  background: none;
+  border-radius: 4px;
+  display: block;
+  margin: 1em auto;
+  padding: 12px;
+}
+.show-more:active {
+  border-color: #D5C46A;
+  color: #D5C46A;
+}
+
 .dashboard-raps {
   padding: 0;
   margin: 0;
@@ -310,10 +328,10 @@ header {
   float: right;
 }
 .dashboard-raps .rap-entry .actions button {
-  border: 1px solid #FFF;
+  border: 0;
   padding: 8px;
   background: none;
-  color: #FFF;
+  color: #D5C46A;
   text-align: center;
   border-radius: 4px;
   float: right;

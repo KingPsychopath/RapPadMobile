@@ -43,23 +43,11 @@ var LoginView = Jr.View.extend({
   },
 
   onSignIn: function() {
-    Jr.Navigator.navigate('/sign-in', {
-      trigger: true,
-      animation: {
-        type: Jr.Navigator.animations.SLIDE_STACK,
-        direction: Jr.Navigator.directions.LEFT
-      }
-    });
+    navigateRight('/sign-in');
   },
 
   onSignUp: function() {
-    Jr.Navigator.navigate('/sign-up', {
-      trigger: true,
-      animation: {
-        type: Jr.Navigator.animations.SLIDE_STACK,
-        direction: Jr.Navigator.directions.LEFT
-      }
-    });
+    navigateRight('/sign-up');
   },
 });
 
@@ -129,23 +117,65 @@ var RapEntryView = Backbone.View.extend({
   },
 });
 
+var RapShowView = Jr.View.extend({
+  template: _.template($('#v-rap-show').html()),
+  events: {
+    'click .prev-btn': 'onBack',
+  },
+
+  onBack: function() {
+    // Just go back in the stack since this can be shown from Dashboard, Explore, or Cypher
+    window.history.back();
+  },
+
+  render: function() {
+    this.$el.html(this.template(this.model.attributes));
+    return this;
+  },
+});
+
 var DashboardView = Jr.View.extend({
   page: 0,
   limit: 25,
   raps_shown: 0,
 
   events: {
+    'click .show-more': 'showMore',
+    'click .edit': 'editRap',
+  },
+
+  editRap: function(evt) {
+    var rapId = $(evt.currentTarget).data('rap-id');
+    navigateRight('/raps/' + rapId);
   },
 
   showMore: function() {
     showLoader();
     this.page++;
+    var self = this;
     $.ajax({
       url: RAPPAD_API_PATH + '/raps',
       type: 'GET',
       data: { page: this.page, limit: this.limit },
       success: function(response) {
+        _(response.raps).each(function(rapJson, index, list) {
+          var rap       = new Rap(rapJson);
+          var rapDate   = new Date(rapJson.created_at);
 
+          // Prettify some values
+          rap.set('word_count', rapJson.lyrics.split(' ').length + ' words');
+          rap.set('pretty_date', rapDate.toDateString());
+
+          rapView = new RapEntryView({ model: rap });
+          rapView.render();
+          $('.dashboard-raps').append(rapView.el);
+
+          self.raps_shown++;
+
+          if (self.raps_shown >= response.total_raps) {
+            $('.show-more').hide();
+          }
+        });
       },
       complete: hideLoader
     });
@@ -153,6 +183,9 @@ var DashboardView = Jr.View.extend({
   },
 
   render: function() {
+    this.$el.html( $('#v-dashboard').html() )
+    $('.show-more').hide();
+
     // Instantly show all drafts
     var self = this;
     draftCollection.fetch();
@@ -168,57 +201,62 @@ var DashboardView = Jr.View.extend({
         page: this.page
       },
       success: function(response) {
-        if (response.raps.length > 0) {
-          _(response.raps).each(function(rapJson, index, list) {
-            var rap       = new Rap(rapJson);
-            var rapDate   = new Date(rapJson.created_at);
+        _(response.raps).each(function(rapJson, index, list) {
+          var rap       = new Rap(rapJson);
+          var rapDate   = new Date(rapJson.created_at);
 
-            // Prettify some values
-            rap.set('word_count', rapJson.lyrics.split(' ').length + ' words');
-            rap.set('pretty_date', rapDate.toDateString());
+          // Prettify some values
+          rap.set('word_count', rapJson.lyrics.split(' ').length + ' words');
+          rap.set('pretty_date', rapDate.toDateString());
 
-            rapView = new RapEntryView({ model: rap });
-            rapView.render();
-            $('.dashboard-raps').append(rapView.el);
+          rapView = new RapEntryView({ model: rap });
+          rapView.render();
+          $('.dashboard-raps').append(rapView.el);
 
-            self.raps_shown++;
-          });
-        } else {
-          // Show a message about writing a rap
-        }
+          self.raps_shown++;
+        });
 
         if (response.raps.length < response.total_raps) {
           // Allow pagination
           $('.show-more').show();
         }
       },
-      error: function() {
-        console.error('performDeltaSync failed.');
-      },
       complete: function() {
         $('.dashboard-sync').removeClass('active');
       }
     });
 
-
-    this.$el.html( $('#v-dashboard').html() )
     return this;
   },
 });
-
 
 var AppRouter = Jr.Router.extend({
   routes: {
     '': 'root',
     'dashboard': 'dashboard',
-    'sign-in': 'sign_in'
+    'sign-in': 'signIn',
+    'raps/:id': 'rapShow',
   },
 
   root: function() {
     this.renderView(new LoginView());
   },
 
-  sign_in: function() {
+  rapShow: function(id) {
+    showLoader();
+    var self = this;
+    $.ajax({
+      url: RAPPAD_API_PATH + '/raps/' + id,
+      type: 'GET',
+      success: function(response) {
+        var rap = new Rap(response);
+        self.renderView(new RapShowView({ model: rap }));
+      },
+      complete: hideLoader
+    });
+  },
+
+  signIn: function() {
     this.renderView(new LoginAuthView());
   },
 
@@ -233,8 +271,6 @@ Zepto(function($) {
 
   // Skip the home page, go straight to dashboard if user is logged in.
   if (App.userLoggedIn()) {
-    // No animation required.
-    //Jr.Navigator.navigate('/dashboard', { trigger: true });
+    Jr.Navigator.navigate('/dashboard', { trigger: true });
   }
-
 });

@@ -92,8 +92,34 @@
           <h1 class="dashboard-header">Your Raps</h1>
           <ul class="dashboard-raps">
           </ul>
-          <button class="show-more"></button>
+          <button class="show-more">Show More</button>
         </div>
+      </div>
+    </script>
+
+    <script id="v-rap-show" type="template">
+      <header class="bar-title ios">
+        <div class="title">{{ title }}</div>
+        <button class="prev-btn" id="prev-btn">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+      </header>
+      <div class="content">
+        <div class="padding-unit">
+          <p>{{ lyrics }}</p>
+        </div>
+      </div>
+    </script>
+
+    <script id="v-editor" type="template">
+      <header class="bar-title ios">
+        <div class="title">Editor</div>
+      </header>
+      <div class="content">
+        <input id="editor-title" type="text" value="Untitled Song" />
+        <textarea id="editor-text"></textarea>
+        <div class="additional-options"></div>
+        <div class="rhyme-suggestions"></div>
       </div>
     </script>
 
@@ -109,7 +135,7 @@
         </div>
         <div class="right-column">
           <div class="actions">
-            <button class="edit">Edit <i class="fa fa-chevron-right"></i></button>
+            <button class="edit" data-rap-id="{{ id }}">Edit <i class="fa fa-chevron-right"></i></button>
           </div>
         </div>
       </li>

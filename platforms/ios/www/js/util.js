@@ -22,6 +22,28 @@ function hideLoader() {
   });
 }
 
+// Conveniance method for navigation
+// Suitable for most use cases
+function navigateRight(url) {
+  Jr.Navigator.navigate(url, {
+    trigger: true,
+    animation: {
+      type: Jr.Navigator.animations.SLIDE_STACK,
+      direction: Jr.Navigator.directions.LEFT
+    }
+  });
+}
+
+function navigateLeft(url) {
+  Jr.Navigator.navigate(url, {
+    trigger: true,
+    animation: {
+      type: Jr.Navigator.animations.SLIDE_STACK,
+      direction: Jr.Navigator.directions.RIGHT
+    }
+  });
+}
+
 (function($){
   $.extend($.fn, {
     enable: function(){
@@ -45,7 +67,7 @@ $(document).on('ajaxBeforeSend', function(e, xhr, options) {
     // GET request will need the params in the URL.
     // ajaxBeforeSend fires AFTER the serialization check happens, so we manually do it here.
     if (options.type.toUpperCase() === 'GET') {
-      var appendChar = options.url.indexOf('?') ? '&' : '?';
+      var appendChar = options.url.indexOf('?') >= 0 ? '&' : '?';
       options.url = [options.url,
         appendChar,
         $.param({ user_token: App.getToken(), user_email: App.getEmail() })

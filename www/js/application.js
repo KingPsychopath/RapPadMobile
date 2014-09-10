@@ -134,6 +134,15 @@ var RapShowView = Jr.View.extend({
   },
 });
 
+var RapEditorView = Backbone.View.extend({
+  template: _.template($('#v-editor').html()),
+  events: {
+  },
+  onBack: function() {
+    navigateLeft('/dashboard');
+  },
+});
+
 var DashboardView = Jr.View.extend({
   page: 0,
   limit: 25,
@@ -236,6 +245,7 @@ var AppRouter = Jr.Router.extend({
     'dashboard': 'dashboard',
     'sign-in': 'signIn',
     'raps/:id': 'rapShow',
+    'editor/(:id)': 'editor'
   },
 
   root: function() {
@@ -254,6 +264,25 @@ var AppRouter = Jr.Router.extend({
       },
       complete: hideLoader
     });
+  },
+
+  editor: function(id) {
+    if (id) {
+      // A rap
+      showLoader();
+      var self = this;
+      $.ajax({
+        url: RAPPAD_API_PATH + '/raps/' + id,
+        type: 'GET',
+        success: function(response) {
+          var rap = new Rap(response);
+          self.renderView(new RapEditorView({ model: rap }));
+        },
+        complete: hideLoader
+      });
+    } else {
+      // A local rap
+    }
   },
 
   signIn: function() {
