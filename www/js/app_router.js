@@ -50,7 +50,7 @@ var AppRouter = Jr.Router.extend({
     }
     else {
       // A new rap
-      var rap = new Rap({
+      var rap = draftCollection.create({
         id: genLocalRapId(),
         lyrics: '',
         title: 'Untitled Rap',

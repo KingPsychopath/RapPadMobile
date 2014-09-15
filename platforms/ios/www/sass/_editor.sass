@@ -2,6 +2,23 @@
   box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.3)
   width: 100%
 
+.editor-error
+  width: 100%
+  border: 0
+  height: 0
+  max-height: 0
+  overflow: hidden
+  -webkit-transition: max-height 300ms, padding 300ms
+  text-align: left
+  background: $red
+  color: #FFF
+  padding: 0 8px
+  &.active
+    height: auto
+    padding: 8px
+    max-height: 200px
+    -webkit-transition: max-height 300ms, padding 300ms
+
 #editor-title
   width: calc(100% - 40px)
   color: $gray

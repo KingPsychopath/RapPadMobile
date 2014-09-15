@@ -256,7 +256,7 @@ header {
 }
 
 .dashboard-sync {
-  color: #FFF;
+  color: #333;
   text-align: center;
   height: 0px;
   padding: 0;
@@ -383,6 +383,25 @@ header {
 .editor-top-wrapper {
   box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.3);
   width: 100%;
+}
+
+.editor-error {
+  width: 100%;
+  border: 0;
+  height: 0;
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: max-height 300ms, padding 300ms;
+  text-align: left;
+  background: #B24341;
+  color: #FFF;
+  padding: 0 8px;
+}
+.editor-error.active {
+  height: auto;
+  padding: 8px;
+  max-height: 200px;
+  -webkit-transition: max-height 300ms, padding 300ms;
 }
 
 #editor-title {

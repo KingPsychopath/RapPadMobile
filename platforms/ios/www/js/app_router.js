@@ -37,17 +37,16 @@ var AppRouter = Jr.Router.extend({
       }
     }
     else if (id) {
-      // A server-side rap
-      showLoader();
-      var self = this;
-      $.ajax({
-        url: RAPPAD_API_PATH + '/raps/' + id,
-        type: 'GET',
-        success: function(response) {
-          self.renderView(new RapEditorView({ model: new Rap(response) }));
-        },
-        complete: hideLoader
-      });
+      // Note: ID comes in as a string, but Backbone knows it as an number.
+      //       Search will fail if it is not a number.
+      var rap = rapCollection.find({ id: parseInt(id, 10) });
+
+      if (rap) {
+        this.renderView(new RapEditorView({ model: rap }));
+      } else {
+        console.error('Rap %s not found.', id);
+        Jr.Navigator.navigate('/dashboard', { trigger: true });
+      }
     }
     else {
       // A new rap
@@ -65,7 +64,7 @@ var AppRouter = Jr.Router.extend({
     this.renderView(new LoginAuthView());
   },
 
-  dashboard: function() {
+  dashboard: function(any) {
     this.renderView(new DashboardView());
   },
 });

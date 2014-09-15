@@ -169,21 +169,40 @@ var RapEditorView = Backbone.View.extend({
   },
 
   onSave: function() {
+    var view = this;
     showLoader();
     if (this.mode === 'LOCAL') {
       this.model.save();
       hideLoader();
       navigateLeft('/dashboard');
-    } else {
+    } else if (this.mode === 'SERVER') {
       // Server side we add callbacks. These callbacks aren't fired for a local rap.
-      this.model.save({
+      this.model.save(null, {
         success: function(model, response, options) {
           hideLoader();
           navigateLeft('/dashboard');
         },
         error: function(model, response, options) {
           hideLoader();
-          alert('Sorry, couldn\'t save that rap right now.');
+          var errorJson = JSON.parse(response.responseText);
+          var errorMessage = '';
+
+          view.$el.find('.editor-error').addClass('active');
+
+          if (errorJson.error && typeof(errorJson.error) === 'object') {
+            // Validation errors
+            errorMessage = buildErrorMessage( errorJson.error );
+          } else {
+            errorMessage = errorJson.error;
+          }
+
+          view.$el.find('.editor-error span')
+            .text('Your rap was not saved. This was the error: ' + errorMessage);
+
+          // Hide the error message after a little while.
+          setTimeout(function() {
+            view.$el.find('.editor-error').removeClass('active');
+          }, 3000);
         },
       });
     }
