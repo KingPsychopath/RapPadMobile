@@ -1,5 +1,6 @@
-var DEBUG           = true;
-var RAPPAD_API_PATH = DEBUG ? 'http://localhost:3000/api' : 'http://www.rappad.co/api';
+/*
+  This file contains the views and their respective logic
+*/
 
 var App = {
   setToken: function(token) {
@@ -27,7 +28,7 @@ var App = {
   },
 
   isFirstTime: function() {
-    return localStorage.getItem('first_time') != null
+    return localStorage.getItem('first_time') != null;
   },
 };
 
@@ -134,19 +135,95 @@ var RapShowView = Jr.View.extend({
   },
 });
 
+var RapEditorView = Backbone.View.extend({
+  template: _.template($('#v-editor').html()),
+  events: {
+    'click #prev-btn'     : 'onBack',
+    'click #editor-save'  : 'onSave',
+    'keyup #editor-title' : 'onUpdate',
+    'keyup #editor-text'  : 'onUpdate',
+  },
+  mode: '',
+  initialize: function() {
+    if (this.model.get('id').toString().charAt(0) === 'L') {
+      this.mode = 'LOCAL';
+    } else {
+      this.mode = 'SERVER';
+    }
+  },
+
+  render: function() {
+    this.$el.append( this.template(this.model.attributes) );
+    this.$el.find('#editor-title').val( this.model.get('title') );
+    this.$el.find('#editor-text').val( this.model.get('lyrics') );
+    return this;
+  },
+
+  onUpdate: function() {
+    var title   = this.$el.find('#editor-title').val();
+    var lyrics  = this.$el.find('#editor-text').val();
+    this.model.set({
+      title: title,
+      lyrics: lyrics,
+    });
+  },
+
+  onSave: function() {
+    showLoader();
+    if (this.mode === 'LOCAL') {
+      this.model.save();
+      hideLoader();
+      navigateLeft('/dashboard');
+    } else {
+      // Server side we add callbacks. These callbacks aren't fired for a local rap.
+      this.model.save({
+        success: function(model, response, options) {
+          hideLoader();
+          navigateLeft('/dashboard');
+        },
+        error: function(model, response, options) {
+          hideLoader();
+          alert('Sorry, couldn\'t save that rap right now.');
+        },
+      });
+    }
+  },
+
+  onBack: function() {
+    navigateLeft('/dashboard');
+  },
+
+});
+
 var DashboardView = Jr.View.extend({
   page: 0,
   limit: 25,
   raps_shown: 0,
 
   events: {
-    'click .show-more': 'showMore',
-    'click .edit': 'editRap',
+    'click .show-more' : 'showMore',
+    'click .edit'      : 'editRap',
+    'click .sync-btn'  : 'syncRaps',
+    'click .write-btn' : 'newRap',
+  },
+
+  syncRaps: function() {
+    // TODO: Sends all drafts to the server
+    this.$el.find('.sync-btn i').addClass('fa-spin').disable();
+    this.$el.find('.sync-btn').enable();
+    setTimeout(function() {
+      this.$el.find('.sync-btn i').removeClass('fa-spin');
+      this.$el.find('.sync-btn').enable();
+    }.bind(this), 2000);
+  },
+
+  newRap: function(evt) {
+    navigateRight('/editor');
   },
 
   editRap: function(evt) {
     var rapId = $(evt.currentTarget).data('rap-id');
-    navigateRight('/raps/' + rapId);
+    navigateRight('/editor/' + rapId);
   },
 
   showMore: function() {
@@ -158,24 +235,22 @@ var DashboardView = Jr.View.extend({
       type: 'GET',
       data: { page: this.page, limit: this.limit },
       success: function(response) {
-        _(response.raps).each(function(rapJson, index, list) {
-          var rap       = new Rap(rapJson);
-          var rapDate   = new Date(rapJson.created_at);
-
-          // Prettify some values
-          rap.set('word_count', rapJson.lyrics.split(' ').length + ' words');
-          rap.set('pretty_date', rapDate.toDateString());
-
+        // Add the new raps to the collection
+        _(response).each(function(element, index, list) {
+          var rap = new Rap(element);
           rapView = new RapEntryView({ model: rap });
           rapView.render();
-          $('.dashboard-raps').append(rapView.el);
+          rapCollection.add(rap)
 
+          $('#server-raps').append(rapView.el);
           self.raps_shown++;
-
-          if (self.raps_shown >= response.total_raps) {
-            $('.show-more').hide();
-          }
         });
+
+        // If less then 25 results, then there can't be anymore to show
+        // If it is 25, then there can potentially be more
+        if (response.length < self.limit) {
+          $('.show-more').hide();
+        }
       },
       complete: hideLoader
     });
@@ -183,94 +258,63 @@ var DashboardView = Jr.View.extend({
   },
 
   render: function() {
-    this.$el.html( $('#v-dashboard').html() )
-    $('.show-more').hide();
+    this.$el.html( $('#v-dashboard').html() );
 
-    // Instantly show all drafts
+    this.$el.find('.show-more').hide();
+    this.$el.find('.dashboard-tip').hide();
+
     var self = this;
-    draftCollection.fetch();
+    draftCollection.fetch({
+      success: function(collection, response, options) {
+        if (collection.models.length === 0) {
+          $('.dashboard-tip').show();
+        } else {
+          _(collection.models).each(function(element, index, list) {
+            var rapView = new RapEntryView({ model: element });
+            rapView.render();
+            self.$el.find('#local-raps').append(rapView.el);
+          });
+        }
+      }
+    });
 
-    // Retrieve server-side raps
-    $('.dashboard-sync').addClass('active');
-    $('.dashboard-sync').text('Loading your raps...');
-    $.ajax({
-      url: RAPPAD_API_PATH + '/raps',
-      type: 'GET',
+    this.$el.find('.dashboard-sync').addClass('active').text('Loading your raps...');
+    rapCollection.fetch({
       data: {
         limit: this.limit,
-        page: this.page
+        page: this.page,
       },
-      success: function(response) {
-        _(response.raps).each(function(rapJson, index, list) {
-          var rap       = new Rap(rapJson);
-          var rapDate   = new Date(rapJson.created_at);
+      success: function(collection, response, options) {
+        // If 25 raps were returned, it's possible
+        // that there is more.
+        if (response.length >= self.limit) {
+          self.$el.find('.show-more').show();
+        } else {
+          self.$el.find('.show-more').hide();
+        }
+        self.$el.find('.dashboard-sync').removeClass('active');
 
-          // Prettify some values
-          rap.set('word_count', rapJson.lyrics.split(' ').length + ' words');
-          rap.set('pretty_date', rapDate.toDateString());
-
-          rapView = new RapEntryView({ model: rap });
+        // Populate the dashboard with raps
+        _(collection.models).each(function(element, index, list) {
+          var rapView = new RapEntryView({ model: element });
           rapView.render();
-          $('.dashboard-raps').append(rapView.el);
-
+          self.$el.find('#server-raps').append(rapView.el);
           self.raps_shown++;
         });
 
-        if (response.raps.length < response.total_raps) {
-          // Allow pagination
-          $('.show-more').show();
+        if (response.length === 0) {
+          self.$el.find('#server-raps')
+            .append('<li class="message">You have no raps written yet.</li>');
         }
       },
-      complete: function() {
-        $('.dashboard-sync').removeClass('active');
+      error: function() {
+        self.$el.find('.dashboard-sync').text('Failed to retrieve latest raps.');
+        setTimeout(function() {
+          self.$el.find('.dashboard-sync').removeClass('active');
+        }, 2000);
       }
     });
 
     return this;
   },
-});
-
-var AppRouter = Jr.Router.extend({
-  routes: {
-    '': 'root',
-    'dashboard': 'dashboard',
-    'sign-in': 'signIn',
-    'raps/:id': 'rapShow',
-  },
-
-  root: function() {
-    this.renderView(new LoginView());
-  },
-
-  rapShow: function(id) {
-    showLoader();
-    var self = this;
-    $.ajax({
-      url: RAPPAD_API_PATH + '/raps/' + id,
-      type: 'GET',
-      success: function(response) {
-        var rap = new Rap(response);
-        self.renderView(new RapShowView({ model: rap }));
-      },
-      complete: hideLoader
-    });
-  },
-
-  signIn: function() {
-    this.renderView(new LoginAuthView());
-  },
-
-  dashboard: function() {
-    this.renderView(new DashboardView());
-  },
-});
-
-Zepto(function($) {
-  var appRouter = window.appRouter = new AppRouter();
-  Backbone.history.start();
-
-  // Skip the home page, go straight to dashboard if user is logged in.
-  if (App.userLoggedIn()) {
-    Jr.Navigator.navigate('/dashboard', { trigger: true });
-  }
 });

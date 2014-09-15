@@ -1,5 +1,5 @@
 .dashboard-sync
-  color: #FFF
+  color: #333
   text-align: center
   height: 0px
   padding: 0
@@ -34,9 +34,32 @@
     border-color: $yellow
     color: $yellow
 
+.dashboard-options
+  width: 100%
+  overflow: auto
+  margin: 1em 0
+  button
+    border: 1px solid $main-font-color
+    color: $main-font-color
+    padding: 8px
+    border-radius: 4px
+    &:active
+      border-color: $yellow
+      color: $yellow
+    &.disabled
+      border-color: $gray
+      color: $gray
+  .sync-btn
+    float: left
+  .write-btn
+    float: right
 .dashboard-raps
   padding: 0
   margin: 0
+  .message
+    width: 100%
+    list-style-type: none
+    background-color: rgba(0, 0, 0, 0.15)
   .rap-entry
     padding: 8px 0
     overflow: auto

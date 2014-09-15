@@ -1,3 +1,6 @@
+var DEBUG           = true;
+var RAPPAD_API_PATH = DEBUG ? 'http://localhost:3000/api' : 'http://www.rappad.co/api';
+
 function showLoader(message) {
   message = message || 'Loading...';
 
@@ -43,6 +46,24 @@ function navigateLeft(url) {
     }
   });
 }
+
+// Generate a unique ID for local storage Raps
+
+// Generate four random hex digits.
+
+
+// Generate a pseudo-GUID by concatenating random hexadecimal.
+function genLocalRapId() {
+  var hex4 = function() {
+   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+  }
+
+  return ['L', hex4(), hex4(), '-',
+    hex4(), '-',
+    hex4(), '-',
+    hex4(), '-',
+    hex4(), hex4(), hex4()].join('');
+};
 
 (function($){
   $.extend($.fn, {

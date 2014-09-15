@@ -13,10 +13,10 @@
     <script type="text/javascript" src="lib/js/lodash.underscore.js"></script>
     <script type="text/javascript" src="lib/js/zepto.js"></script>
     <script type="text/javascript" src="lib/js/zepto.flickable.js"></script>
-    <script type="text/javascript" src="lib/js/backbone-min.js"></script>
+    <script type="text/javascript" src="lib/js/backbone.js"></script>
     <script type="text/javascript" src="lib/js/junior.js"></script>
     <script type="text/javascript" src="lib/js/fastclick.js"></script>
-    <script type="text/javascript" src="lib/js/date.js"></script>
+    <script type="text/javascript" src="lib/js/backbone.localStorage.js"></script>
     <link type="text/css" rel="stylesheet" href="lib/css/junior.css" />
     <link type="text/css" rel="stylesheet" href="lib/css/font-awesome.css" />
     <!-- our app -->
@@ -88,9 +88,20 @@
         <div class="dashboard-sync"></div>
         <div class="padding-unit">
           <h1 class="dashboard-header first">Your Drafts</h1>
-          <p class="dashboard-tip">Drafts are always saved on the phone first, so you can you write raps even without an internet connection. When you want you can send all your drafts to be saved on RapPad, so you can access them anywhere with an internet connection.</p>
+          <ul id="local-raps" class="dashboard-raps"></ul>
+          <p id="local-rap-tip" class="dashboard-tip">Drafts are always saved on the phone first, so you can you write raps even without an internet connection. When you want you can send all your drafts to be saved on RapPad, so you can access them anywhere with an internet connection.</p>
+          <div class="dashboard-options">
+            <button class="sync-btn">
+              <i class="fa fa-refresh"></i>
+              Sync
+            </button>
+            <button class="write-btn">
+              <i class="fa fa-pencil"></i>
+              Write a Rap
+            </button>
+          </div>
           <h1 class="dashboard-header">Your Raps</h1>
-          <ul class="dashboard-raps">
+          <ul id="server-raps" class="dashboard-raps">
           </ul>
           <button class="show-more">Show More</button>
         </div>
@@ -114,9 +125,21 @@
     <script id="v-editor" type="template">
       <header class="bar-title ios">
         <div class="title">Editor</div>
+        <button class="prev-btn" id="prev-btn">
+          <i class="fa fa-chevron-left"></i>
+        </button>
       </header>
       <div class="content">
-        <input id="editor-title" type="text" value="Untitled Song" />
+        <div class="editor-top-wrapper">
+          <div class="editor-error">
+            <i class="fa fa-warning"></i>
+            <span></span>
+          </div>
+          <input id="editor-title" type="text" value="Untitled Song" />
+          <button id="editor-save">
+            <i class="fa fa-cloud-upload"></i>
+          </button>
+        </div>
         <textarea id="editor-text"></textarea>
         <div class="additional-options"></div>
         <div class="rhyme-suggestions"></div>
@@ -152,7 +175,8 @@
 
     <!-- our app -->
     <script type="text/javascript" src="js/util.js"></script>
-    <script type="text/javascript" src="js/application.js"></script>
     <script type="text/javascript" src="js/raps.js"></script>
+    <script type="text/javascript" src="js/application.js"></script>
+    <script type="text/javascript" src="js/app_router.js"></script>
   </body>
 </html>

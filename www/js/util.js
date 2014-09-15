@@ -47,6 +47,42 @@ function navigateLeft(url) {
   });
 }
 
+function capitalize(word) {
+  if (typeof(word) != 'string' || word.length === 0) return word;
+  var firstLetter = word.charAt(0);
+  return firstLetter.toUpperCase() + word.substring(1);
+}
+
+function buildErrorMessage(validationErrors) {
+  // The key is the attribute that was invalid.
+  // The value an array of errors with that attribute.
+  var errors = [];
+  for (key in validationErrors) {
+    _(validationErrors[key]).each(function(element, index, list) {
+      // A little helper for lyrics.
+      if (key === 'lyrics') {
+        element = element.replace('is too short', 'are too short');
+      }
+
+      errors.push( capitalize(key) + ' ' + element );
+    });
+  }
+  return errors.join('. ');
+}
+
+// Generate a pseudo-GUID by concatenating random hexadecimal.
+function genLocalRapId() {
+  var hex4 = function() {
+   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+  }
+
+  return ['L', hex4(), hex4(), '-',
+    hex4(), '-',
+    hex4(), '-',
+    hex4(), '-',
+    hex4(), hex4(), hex4()].join('');
+};
+
 (function($){
   $.extend($.fn, {
     enable: function(){
@@ -77,10 +113,18 @@ $(document).on('ajaxBeforeSend', function(e, xhr, options) {
       ].join('');
     } else {
       if (options.data) {
-        _.extend(options.data, {
-          'user_token': App.getToken(),
-          'user_email': App.getEmail(),
-        });
+        // Handles PUTs for rap models.
+        if (typeof(options.data) === 'string') {
+          options.data = JSON.parse(options.data);
+          options.data['user_token'] = App.getToken();
+          options.data['user_email'] = App.getEmail();
+          options.data = JSON.stringify(options.data);
+        } else if (typeof(options.data) === 'object') {
+          _.extend(options.data, {
+            'user_token': App.getToken(),
+            'user_email': App.getEmail(),
+          });
+        }
       } else {
         _.extend(options, {
           data: {
