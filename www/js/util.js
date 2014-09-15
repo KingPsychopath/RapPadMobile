@@ -63,7 +63,6 @@ function buildErrorMessage(validationErrors) {
       if (key === 'lyrics') {
         element = element.replace('is too short', 'are too short');
       }
-
       errors.push( capitalize(key) + ' ' + element );
     });
   }
@@ -105,7 +104,7 @@ $(document).on('ajaxBeforeSend', function(e, xhr, options) {
   if (App.userLoggedIn()) {
     // GET request will need the params in the URL.
     // ajaxBeforeSend fires AFTER the serialization check happens, so we manually do it here.
-    if (options.type.toUpperCase() === 'GET') {
+    if (options.type.toUpperCase() === 'GET' || options.type.toUpperCase() === 'DELETE') {
       var appendChar = options.url.indexOf('?') >= 0 ? '&' : '?';
       options.url = [options.url,
         appendChar,

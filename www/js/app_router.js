@@ -72,6 +72,7 @@ var AppRouter = Jr.Router.extend({
 Zepto(function($) {
   var appRouter = window.appRouter = new AppRouter();
   Backbone.history.start();
+  FastClick.attach(document.body);
 
   // Skip the home page, go straight to dashboard if user is logged in.
   if (App.userLoggedIn()) {

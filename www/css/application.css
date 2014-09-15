@@ -86,9 +86,27 @@ header {
   font-size: 1.5em;
   text-shadow: 1px 1px 0px #000;
 }
+.bar-title .right-btn {
+  background: none;
+  color: #FFF;
+  border: 0;
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  padding: 0 4px;
+  font-size: 1.25em;
+  z-index: 10;
+}
+.bar-title .right-btn.privacy {
+  margin-top: 3px;
+}
+.bar-title .right-btn:active {
+  -webkit-transform: scale(0.8);
+  outline: none;
+}
 .bar-title .prev-btn {
   background: none;
-  color: white;
+  color: #FFF;
   border: 0;
   position: absolute;
   top: 10px;
@@ -106,7 +124,7 @@ header {
 .bar-title.ios ~ .content {
   top: 60px;
 }
-.bar-title.ios .prev-btn {
+.bar-title.ios .prev-btn, .bar-title.ios .right-btn {
   top: 26px;
 }
 .bar-title.ios .title {
@@ -405,7 +423,7 @@ header {
 }
 
 #editor-title {
-  width: calc(100% - 40px);
+  width: 100%;
   color: #626262;
   border: 0;
   height: 32px;
@@ -416,21 +434,42 @@ header {
   padding: 0 8px;
 }
 
-#editor-save {
-  width: 40px;
-  height: 32px;
-  right: 0px;
-  height: 32px;
-  background: #DE6A3D;
-  color: #EEE;
-  margin: 0;
-  border: 0;
-  text-align: center;
-  float: right;
+.additional-options {
+  height: 40px;
+  padding: 8px;
 }
-#editor-save:active {
-  background: #da5927;
-  box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+.additional-options button {
+  float: left;
+  max-width: 33.33%;
+  height: 100%;
+  padding: 8px;
+  margin-right: 8px;
+  border: 2px solid #EEE;
+  color: #EEE;
+  border-radius: 4px;
+}
+.additional-options button:last-child {
+  width: 33%;
+  float: right;
+  margin: 0;
+}
+.additional-options button:disabled {
+  color: #626262 !important;
+  border-color: #626262 !important;
+}
+.additional-options #editor-save {
+  border-color: #DE6A3D;
+}
+.additional-options #editor-save:active {
+  background: #DE6A3D;
+  color: #FFF;
+}
+.additional-options #editor-delete {
+  border-color: #B24341;
+}
+.additional-options #editor-delete:active {
+  background: #B24341;
+  color: #FFF;
 }
 
 #editor-text {

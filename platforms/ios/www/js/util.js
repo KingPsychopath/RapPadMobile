@@ -63,7 +63,6 @@ function buildErrorMessage(validationErrors) {
       if (key === 'lyrics') {
         element = element.replace('is too short', 'are too short');
       }
-
       errors.push( capitalize(key) + ' ' + element );
     });
   }

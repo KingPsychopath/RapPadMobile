@@ -140,6 +140,7 @@ var RapEditorView = Backbone.View.extend({
   events: {
     'click #prev-btn'     : 'onBack',
     'click #editor-save'  : 'onSave',
+    'click #editor-delete': 'onDelete',
     'keyup #editor-title' : 'onUpdate',
     'keyup #editor-text'  : 'onUpdate',
   },
@@ -166,6 +167,21 @@ var RapEditorView = Backbone.View.extend({
       title: title,
       lyrics: lyrics,
     });
+  },
+
+  onDelete: function(evt) {
+    if (this.mode === 'LOCAL') {
+      this.model.destroy();
+      navigateLeft('/dashboard');
+    } else if (this.mode === 'SERVER') {
+      this.$el.find('#editor-delete').disable();
+      this.$el.find('#editor-delete i').removeClass('fa-remove').addClass('fa-spin fa-spinner');
+      this.model.destroy({
+        success: function(model, response) {
+          navigateLeft('/dashboard');
+        }
+      });
+    }
   },
 
   onSave: function() {
