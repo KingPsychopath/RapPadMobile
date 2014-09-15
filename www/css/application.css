@@ -389,6 +389,14 @@ header {
   border-color: #D5C46A;
   color: #D5C46A;
 }
+.dashboard-raps .rap-entry .actions .status.success {
+  color: #EEE;
+  background: #105639;
+}
+.dashboard-raps .rap-entry .actions .status.error {
+  color: #EEE;
+  background: #B24341;
+}
 .dashboard-raps .rap-entry .meta {
   font-size: 0.9em;
   overflow: hidden;
