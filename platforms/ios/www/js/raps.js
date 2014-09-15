@@ -4,7 +4,11 @@
 
 var Rap = Backbone.Model.extend({
   initialize: function() {
-    // Add pretty-prints of certain attributes
+    this.prettify();
+  },
+
+  // Add pretty-prints of certain attributes
+  prettify: function() {
     if ('lyrics' in this.attributes) {
       this.set('word_count', this.attributes.lyrics.split(' ').length + ' words');
     }
@@ -26,3 +30,7 @@ var DraftCollection = Backbone.Collection.extend({
 
 var draftCollection = new DraftCollection();
 var rapCollection   = new RapCollection();
+
+draftCollection.on('change', function(model, options) {
+  model.prettify();
+});

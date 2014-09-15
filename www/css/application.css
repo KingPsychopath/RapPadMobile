@@ -434,6 +434,35 @@ header {
   padding: 0 8px;
 }
 
+.rhyme-suggestions {
+  width: 100%;
+  box-sizing: border-box;
+  height: 0;
+  line-height: 32px;
+  overflow: hidden;
+  -webkit-transition: height 250ms;
+  background: #105994;
+  color: #FFF;
+  white-space: nowrap;
+}
+.rhyme-suggestions i {
+  color: #1783d9;
+  width: 5%;
+  text-align: center;
+  vertical-align: top;
+  margin-top: 8px;
+}
+.rhyme-suggestions .suggestions {
+  width: 90%;
+  height: 100%;
+  display: inline-block;
+  overflow-x: auto;
+}
+.rhyme-suggestions.active {
+  height: 32px;
+  -webkit-transition: height 250ms;
+}
+
 .additional-options {
   height: 40px;
   padding: 8px;

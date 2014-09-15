@@ -104,33 +104,21 @@ $(document).on('ajaxBeforeSend', function(e, xhr, options) {
   if (App.userLoggedIn()) {
     // GET request will need the params in the URL.
     // ajaxBeforeSend fires AFTER the serialization check happens, so we manually do it here.
-    if (options.type.toUpperCase() === 'GET') {
+    if (options.type.toUpperCase() === 'GET' || options.type.toUpperCase() === 'DELETE') {
       var appendChar = options.url.indexOf('?') >= 0 ? '&' : '?';
       options.url = [options.url,
         appendChar,
         $.param({ user_token: App.getToken(), user_email: App.getEmail() })
       ].join('');
     } else {
+      // Handle PUT and POST
       if (options.data) {
-        // Handles PUTs for rap models.
-        if (typeof(options.data) === 'string') {
+        try {
           options.data = JSON.parse(options.data);
           options.data['user_token'] = App.getToken();
           options.data['user_email'] = App.getEmail();
           options.data = JSON.stringify(options.data);
-        } else if (typeof(options.data) === 'object') {
-          _.extend(options.data, {
-            'user_token': App.getToken(),
-            'user_email': App.getEmail(),
-          });
-        }
-      } else {
-        _.extend(options, {
-          data: {
-            'user_token': App.getToken(),
-            'user_email': App.getEmail(),
-          }
-        });
+        } catch (ex) {}
       }
     }
   }

@@ -111,26 +111,14 @@ $(document).on('ajaxBeforeSend', function(e, xhr, options) {
         $.param({ user_token: App.getToken(), user_email: App.getEmail() })
       ].join('');
     } else {
+      // Handle PUT and POST
       if (options.data) {
-        // Handles PUTs for rap models.
-        if (typeof(options.data) === 'string') {
+        try {
           options.data = JSON.parse(options.data);
           options.data['user_token'] = App.getToken();
           options.data['user_email'] = App.getEmail();
           options.data = JSON.stringify(options.data);
-        } else if (typeof(options.data) === 'object') {
-          _.extend(options.data, {
-            'user_token': App.getToken(),
-            'user_email': App.getEmail(),
-          });
-        }
-      } else {
-        _.extend(options, {
-          data: {
-            'user_token': App.getToken(),
-            'user_email': App.getEmail(),
-          }
-        });
+        } catch (ex) {}
       }
     }
   }

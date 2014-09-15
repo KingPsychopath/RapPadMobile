@@ -30,6 +30,31 @@
   box-sizing: border-box
   padding: 0 8px
 
+.rhyme-suggestions
+  width: 100%
+  box-sizing: border-box
+  height: 0
+  line-height: 32px
+  overflow: hidden
+  -webkit-transition: height 250ms
+  background: $blue
+  color: #FFF
+  white-space: nowrap
+  i
+    color: lighten($blue, 15%)
+    width: 5%
+    text-align: center
+    vertical-align: top
+    margin-top: 8px
+  .suggestions
+    width: 90%
+    height: 100%
+    display: inline-block
+    overflow-x: auto
+  &.active
+    height: 32px
+    -webkit-transition: height 250ms
+
 .additional-options
   height: 40px
   padding: 8px

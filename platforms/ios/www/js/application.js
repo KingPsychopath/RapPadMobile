@@ -138,11 +138,13 @@ var RapShowView = Jr.View.extend({
 var RapEditorView = Backbone.View.extend({
   template: _.template($('#v-editor').html()),
   events: {
-    'click #prev-btn'     : 'onBack',
-    'click #editor-save'  : 'onSave',
-    'click #editor-delete': 'onDelete',
-    'keyup #editor-title' : 'onUpdate',
-    'keyup #editor-text'  : 'onUpdate',
+    'click #prev-btn'           : 'onBack',
+    'click #editor-save'        : 'onSave',
+    'click #editor-delete'      : 'onDelete',
+    'click #editor-find-rhymes' : 'onRhymeFind',
+    'click .rhyme-suggestions'  : 'onRhymeSuggestionClick',
+    'keyup #editor-title'       : 'onUpdate',
+    'keyup #editor-text'        : 'onUpdate',
   },
   mode: '',
   initialize: function() {
@@ -158,6 +160,47 @@ var RapEditorView = Backbone.View.extend({
     this.$el.find('#editor-title').val( this.model.get('title') );
     this.$el.find('#editor-text').val( this.model.get('lyrics') );
     return this;
+  },
+
+  onRhymeSuggestionClick: function() {
+    this.$el.find('.rhyme-suggestions').removeClass('active');
+  },
+
+  onRhymeFind: function() {
+    // Find the last word
+    var lastWord = this.$el.find('#editor-text').val().split(' ').pop();
+    var view     = this;
+    this.$el.find('#editor-find-rhymes').disable();
+
+    $.ajax({
+      url: RAPPAD_API_PATH + '/raps/rhyme',
+      type: 'POST',
+      data: {
+        word: lastWord,
+        user_token: App.getToken(),
+        user_email: App.getEmail()
+      },
+      success: function(response) {
+        var rhymes = response.rhymes;
+        var rhymeHtml = '';
+        _(rhymes).each(function(element, index, list) {
+          rhymeHtml += '<span class="word">' + element + '</span> ';
+        });
+
+        view.$el.find('.rhyme-suggestions .suggestions').html(rhymeHtml);
+        view.$el.find('.rhyme-suggestions').addClass('active');
+      },
+      error: function() {
+        view.$el.find('.editor-error span').text('No rhymes could be found right now.')
+          .addClass('active');
+        setTimeout(function() {
+          view.$el.find('.editor-error span').removeClass('active');
+        }, 2000);
+      },
+      complete: function() {
+        view.$el.find('#editor-find-rhymes').enable();
+      },
+    });
   },
 
   onUpdate: function() {
