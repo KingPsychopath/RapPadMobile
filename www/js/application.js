@@ -309,6 +309,22 @@ var DashboardView = Jr.View.extend({
     'click .edit'      : 'editRap',
     'click .sync-btn'  : 'syncRaps',
     'click .write-btn' : 'newRap',
+    'click #other'     : 'other'
+  },
+
+  clearNavbar: function() {
+    this.$el.find('#other i').removeClass('fa-remove').addClass('fa-navicon');
+    this.$el.find('.navbar').removeClass('active').unbind('click');
+  },
+
+  other: function(evt) {
+    var $navButton = this.$el.find('#other');
+    if ($navButton.find('i').hasClass('fa-navicon')) {
+      $navButton.find('i').removeClass('fa-navicon').addClass('fa-remove');
+      this.$el.find('.navbar').addClass('active');
+    } else {
+      this.clearNavbar();
+    }
   },
 
   doneSync: function() {
