@@ -143,6 +143,8 @@ var RapEditorView = Backbone.View.extend({
     'click #editor-delete'      : 'onDelete',
     'click #editor-find-rhymes' : 'onRhymeFind',
     'click .rhyme-suggestions'  : 'onRhymeSuggestionClick',
+    'click #privacy-settings'   : 'onTogglePrivacySettings',
+    'click .p-setting'          : 'onPrivacySettingClick',
     'keyup #editor-title'       : 'onUpdate',
     'keyup #editor-text'        : 'onUpdate',
   },
@@ -159,7 +161,27 @@ var RapEditorView = Backbone.View.extend({
     this.$el.append( this.template(this.model.attributes) );
     this.$el.find('#editor-title').val( this.model.get('title') );
     this.$el.find('#editor-text').val( this.model.get('lyrics') );
+    this.$el.find('.p-setting[data-value="' + this.model.get('visibility') + '"]')
+      .addClass('active');
     return this;
+  },
+
+  onPrivacySettingClick: function(evt) {
+    var $settingBtn   = $(evt.currentTarget);
+    var privacyValue  = $settingBtn.data('value');
+
+    $('.p-setting').removeClass('active');
+    this.model.set({ visibility: privacyValue });
+    $('.p-setting[data-value="' + privacyValue + '"]').addClass('active');
+  },
+
+  onTogglePrivacySettings: function() {
+    var $privacySettings = this.$el.find('.all-privacy-settings');
+    if ($privacySettings.hasClass('active')) {
+      $privacySettings.removeClass('active');
+    } else {
+      $privacySettings.addClass('active');
+    }
   },
 
   onRhymeSuggestionClick: function() {
@@ -213,6 +235,10 @@ var RapEditorView = Backbone.View.extend({
   },
 
   onDelete: function(evt) {
+    if (!confirm('Are you sure?')) {
+      return;
+    }
+
     if (this.mode === 'LOCAL') {
       this.model.destroy();
       navigateLeft('/dashboard');

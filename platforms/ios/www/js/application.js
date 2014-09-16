@@ -213,6 +213,10 @@ var RapEditorView = Backbone.View.extend({
   },
 
   onDelete: function(evt) {
+    if (!confirm('Are you sure?')) {
+      return;
+    }
+
     if (this.mode === 'LOCAL') {
       this.model.destroy();
       navigateLeft('/dashboard');
@@ -285,14 +289,59 @@ var DashboardView = Jr.View.extend({
     'click .write-btn' : 'newRap',
   },
 
+  doneSync: function() {
+    console.info('Sync finished.');
+    this.render();
+  },
+
   syncRaps: function() {
-    // TODO: Sends all drafts to the server
-    this.$el.find('.sync-btn i').addClass('fa-spin').disable();
-    this.$el.find('.sync-btn').enable();
-    setTimeout(function() {
-      this.$el.find('.sync-btn i').removeClass('fa-spin');
-      this.$el.find('.sync-btn').enable();
-    }.bind(this), 2000);
+    this.$el.find('.sync-btn i').addClass('fa-spin');
+    this.$el.find('.sync-btn').disable();
+
+    var view              = this;
+    var draftRapElements  = this.$el.find('#local-raps .rap-entry');
+
+    _(draftRapElements).each(function(element, index, list) {
+      var $rap    = $(element);
+      var $status = $('<div class="status">Syncing...</div>');
+      var rapId   = $rap.find('.edit').data('rap-id');
+      var rap     = draftCollection.find({ id: rapId });
+
+      $rap.find('.actions button').hide();
+      $rap.find('.actions').append($status);
+
+      (function(index, maxIndex) {
+        var rapAttributes = rap.getSafeAttributes();
+        rapCollection.create(rapAttributes, {
+          wait: true,
+          success: function() {
+            // Remove the draft from the draft collection
+            rap.destroy();
+            $status.html('Success!').addClass('success');
+            if (index >= maxIndex) {
+              view.doneSync();
+            }
+          },
+          error: function(model, response, options) {
+            var errorJson = JSON.parse(response.responseText);
+            if (errorJson.error) {
+              $status.addClass('error').text('Failed: ' + buildErrorMessage(errorJson.error));
+            } else {
+              $status.html('Failed.').addClass('error');
+            }
+
+            if (index >= maxIndex) {
+              view.$el.find('.dashboard-sync')
+                .addClass('active')
+                .html('Click here to refresh.')
+                .one('click', function() { view.doneSync() });
+
+            }
+          },
+        });
+      })(index, list.length - 1);
+
+    });
   },
 
   newRap: function(evt) {
@@ -357,6 +406,7 @@ var DashboardView = Jr.View.extend({
     });
 
     this.$el.find('.dashboard-sync').addClass('active').text('Loading your raps...');
+    rapCollection.reset();
     rapCollection.fetch({
       data: {
         limit: this.limit,

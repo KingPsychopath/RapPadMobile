@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"rhy",
+				"rhyme-suggestions"
+			],
+			[
+				"p",
+				"prettify"
+			],
+			[
 				"navigate",
 				"navigateLeft"
 			],
@@ -506,14 +514,6 @@
 			[
 				"top_user",
 				"top_user_ids"
-			],
-			[
-				"defne",
-				"defender_rap"
-			],
-			[
-				"challenger",
-				"challenger_rap_line_count"
 			]
 		]
 	},
@@ -669,27 +669,36 @@
 	},
 	"file_history":
 	[
-		"/Users/amirsharif/rp-mobile/.gitignore",
-		"/Users/amirsharif/rp-mobile/config.xml",
-		"/Users/amirsharif/rp-mobile/www/sass/_login.sass",
 		"/Users/amirsharif/rp-mobile/www/sass/application.sass",
-		"/Users/amirsharif/rp-mobile/www/js/raps.js",
 		"/Users/amirsharif/rp-mobile/RapPadMobile.sublime-project",
-		"/Users/amirsharif/rp-mobile/www/sass/_edtiro.sass",
-		"/Users/amirsharif/rp-mobile/README.md",
-		"/Users/amirsharif/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/amirsharif/rp-mobile/www/css/application.css",
+		"/Users/amirsharif/rp-mobile/www/lib/js/zepto.js",
+		"/Users/amirsharif/rp-mobile/www/lib/js/backbone.js",
+		"/Users/amirsharif/rp-mobile/www/js/util.js",
 		"/Users/amirsharif/rp-mobile/www/font/ProximaNova-Semibold.otf",
+		"/Users/amirsharif/rp-mobile/www/sass/_dashboard.sass",
+		"/Users/amirsharif/rp-mobile/www/js/app_router.js",
+		"/Users/amirsharif/rp-mobile/www/lib/js/backbone-min.js",
+		"/Users/amirsharif/rp-mobile/www/lib/js/backbone.localStorage.js",
+		"/Users/amirsharif/rp-mobile/www/css/application.css.map",
+		"/Users/amirsharif/rp-mobile/www/lib/js/modernizr.js",
+		"/Users/amirsharif/rp-mobile/www/sass/_base.sass",
+		"/Users/amirsharif/rp-mobile/www/font/FontAwesome.otf",
+		"/Users/amirsharif/rp-mobile/www/sass/_editor.sass",
 		"/Users/amirsharif/rp-mobile/www/lib/css/font-awesome.css",
+		"/Users/amirsharif/rp-mobile/config.xml",
+		"/Users/amirsharif/rp-mobile/www/js/raps.js",
+		"/Users/amirsharif/rp-mobile/README.md",
+		"/Users/amirsharif/rp-mobile/.gitignore",
+		"/Users/amirsharif/rp-mobile/www/sass/_login.sass",
+		"/Users/amirsharif/rp-mobile/www/sass/_edtiro.sass",
+		"/Users/amirsharif/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/amirsharif/rp-mobile/www/sass/_palette.sass",
 		"/Users/amirsharif/rp-mobile/www/js/application.js",
 		"/Users/amirsharif/rp-mobile/www/font/ProximaNova-Regular.otf",
-		"/Users/amirsharif/rp-mobile/www/css/application.css.map",
 		"/Users/amirsharif/rp-mobile/www/lib/js/lodash.underscore.js",
-		"/Users/amirsharif/rp-mobile/www/lib/js/backbone-min.js",
 		"/Users/amirsharif/rp-mobile/www/font/BebasNeue-webfont.svg",
 		"/Users/amirsharif/rp-mobile/.sublime-project",
-		"/Users/amirsharif/rp-mobile/www/sass/_base.sass",
 		"/Users/amirsharif/rp-mobile/.sass-cache/30040207da39d9eb7ac1299e253274c7adbe1de6/_base.sassc",
 		"/Users/amirsharif/rp-mobile/platforms/ios/cordova/build",
 		"/Users/amirsharif/rp-mobile/www/lib/js/junior.js",
@@ -702,7 +711,6 @@
 		"/Users/amirsharif/rp-mobile/plugins/ios.json",
 		"/Users/amirsharif/rp-mobile/www/font/fontawesome-webfont.woff",
 		"/Users/amirsharif/rp-mobile/www/font/fontawesome-webfont.svg",
-		"/Users/amirsharif/rp-mobile/www/font/FontAwesome.otf",
 		"/Users/amirsharif/rp-mobile/platforms/ios/build/emulator/RapPadMobile.app/RapPadMobile",
 		"/Users/amirsharif/rp-mobile/www/lib/css/junior.css",
 		"/Users/amirsharif/rpmobile/app.html",
@@ -788,19 +796,11 @@
 		"/Users/amirsharif/rappad/lib/nailgun/apidocs/com/martiansoftware/nailgun/NailStats.html",
 		"/Users/amirsharif/rappad/script/rails",
 		"/Users/amirsharif/rappad/lib/RhymeApp/renJay.txt",
-		"/Users/amirsharif/rappad/db/migrate/20140424175804_add_delayed_job_id_to_battle.rb",
-		"/Users/amirsharif/rappad/config/initializers/elastic_search_helpers.rb",
-		"/Users/amirsharif/rappad/app/views/devise/mailer/unlock_instructions.html.erb",
-		"/Users/amirsharif/rappad/db/migrate/20130406231303_change_beat_url_to_you_tube_i_ds.rb",
-		"/Users/amirsharif/rappad/db/migrate/20130503011034_transition_rap_beat_url_attribute_to_beat_object.rb",
-		"/Users/amirsharif/rappad/config/environment.rb",
-		"/Users/amirsharif/rappad/app/assets/javascripts/editor.coffee",
-		"/Users/amirsharif/rappad/app/views/common/_beat_player.html.slim",
-		"/Users/amirsharif/rappad/app/views/common/_olark.html.erb"
+		"/Users/amirsharif/rappad/db/migrate/20140424175804_add_delayed_job_id_to_battle.rb"
 	],
 	"find":
 	{
-		"height": 54.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -840,6 +840,54 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"delete",
+			"sync",
+			"Sync",
+			"latest",
+			"sync",
+			"rap-entry",
+			".edit",
+			"DashboardView",
+			"sync",
+			"onRhyme",
+			"session",
+			"post:",
+			"type: 'POST'",
+			"type: ",
+			"ajax",
+			"$.ajax",
+			"top-wrap",
+			"rhymes",
+			"delete",
+			"EditorView",
+			"privacy-",
+			"Rhymes",
+			"save",
+			"calc",
+			"Write a",
+			"DashboardView",
+			"edit",
+			"draftCollection",
+			"debug",
+			"debugger",
+			"response",
+			"errorJson",
+			"sync",
+			"dashboard",
+			"error",
+			"editor",
+			"save",
+			"debugger",
+			".url =",
+			"save: ",
+			"url: ",
+			".url: ",
+			".model",
+			"backbone",
+			"url",
+			"debugger",
+			"rapCollection",
+			"collection.find",
 			"color",
 			".bind(this)",
 			".save()",
@@ -919,55 +967,7 @@
 			"color",
 			"yellow",
 			"ignore",
-			"debugger",
-			"#BebasNeueRegular\"",
-			"\"../",
-			"'",
-			"fonts",
-			"font",
-			"app-main",
-			"app-",
-			"purple",
-			"<",
-			"events: ",
-			"renderView",
-			"rnder",
-			"Jr.Navigator",
-			"resetContent",
-			"1 px",
-			"bold",
-			"rappad",
-			"_.",
-			"120%",
-			"admin?",
-			"moot",
-			"username",
-			"update",
-			"ban",
-			"ban user",
-			"admin",
-			"Admin.",
-			"rack",
-			"rack-attack",
-			"rack",
-			"rac",
-			"rea",
-			"blacklist",
-			"SecureRandom",
-			"temp_",
-			"tmp",
-			"September 2013",
-			"username",
-			"$(link)",
-			"\"",
-			"muut_credentials",
-			"\"",
-			"temp_lyrics",
-			"subs",
-			"battle",
-			"line",
-			"valid>",
-			"youtube_query"
+			"debugger"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1013,7 +1013,7 @@
 		"cols":
 		[
 			0.0,
-			0.395179831026,
+			0.546072108303,
 			1.0
 		],
 		"rows":
@@ -1042,12 +1042,92 @@
 		"selected_items":
 		[
 			[
-				"",
-				"www/index.html"
+				"appjs",
+				"www/js/application.js"
+			],
+			[
+				"git",
+				".gitignore"
+			],
+			[
+				"gin",
+				"www/sass/_login.sass"
+			],
+			[
+				"appljs",
+				"www/js/application.js"
+			],
+			[
+				"rapjs",
+				"www/js/raps.js"
+			],
+			[
+				"dashb",
+				"www/sass/_dashboard.sass"
+			],
+			[
+				"zpe",
+				"www/lib/js/zepto.js"
 			],
 			[
 				"util",
 				"www/js/util.js"
+			],
+			[
+				"basesas",
+				"www/sass/_base.sass"
+			],
+			[
+				"indexht",
+				"www/index.html"
+			],
+			[
+				"utils",
+				"www/js/util.js"
+			],
+			[
+				"approut",
+				"www/js/app_router.js"
+			],
+			[
+				"gitn",
+				".gitignore"
+			],
+			[
+				"dashboard",
+				"www/sass/_dashboard.sass"
+			],
+			[
+				"editor",
+				"www/sass/_editor.sass"
+			],
+			[
+				"index",
+				"www/index.html"
+			],
+			[
+				"back",
+				"www/lib/js/backbone.js"
+			],
+			[
+				"backbone",
+				"www/lib/js/backbone-min.js"
+			],
+			[
+				"backbnoea",
+				"www/lib/js/backbone.localStorage.js"
+			],
+			[
+				"rap",
+				"www/js/raps.js"
+			],
+			[
+				"read",
+				"README.md"
+			],
+			[
+				"",
+				"www/index.html"
 			],
 			[
 				"local",
@@ -1070,20 +1150,8 @@
 				"www/js/raps.js"
 			],
 			[
-				"appljs",
-				"www/js/application.js"
-			],
-			[
-				"editor",
-				"www/sass/_editor.sass"
-			],
-			[
 				"readme",
 				"README.md"
-			],
-			[
-				"rapjs",
-				"www/js/raps.js"
 			],
 			[
 				"bases",
@@ -1094,28 +1162,12 @@
 				"www/sass/_editor.sass"
 			],
 			[
-				"dashboard",
-				"www/sass/_dashboard.sass"
-			],
-			[
 				"editorsass",
 				"www/sass/_editor.sass"
 			],
 			[
-				"dashb",
-				"www/sass/_dashboard.sass"
-			],
-			[
 				"appisas",
 				"www/sass/application.sass"
-			],
-			[
-				"rap",
-				"www/js/raps.js"
-			],
-			[
-				"index",
-				"www/index.html"
 			],
 			[
 				"indexhtm",
@@ -1192,10 +1244,6 @@
 			[
 				"js",
 				"js/application.js"
-			],
-			[
-				"back",
-				"lib/js/backbone-min.js"
 			],
 			[
 				"sidebar",
@@ -1504,54 +1552,6 @@
 			[
 				"upload",
 				"uploader.js"
-			],
-			[
-				"reacionjs",
-				"reactions.js"
-			],
-			[
-				"reahtml",
-				"reactions.html"
-			],
-			[
-				"mani",
-				"manifest.json"
-			],
-			[
-				"homecontr",
-				"app/controllers/home_controller.rb"
-			],
-			[
-				"rake",
-				"lib/tasks/growth.rake"
-			],
-			[
-				"gmfi",
-				"Gemfile"
-			],
-			[
-				"weeklnew",
-				"app/views/user_mailer/weekly_newsletter.slim"
-			],
-			[
-				"homeontr",
-				"app/controllers/home_controller.rb"
-			],
-			[
-				"addweekl",
-				"db/migrate/20140519003140_add_weekly_newsletter_subscription_to_user.rb"
-			],
-			[
-				"usermai",
-				"app/mailers/user_mailer.rb"
-			],
-			[
-				"sched",
-				"config/schedule.rb"
-			],
-			[
-				"apiusercontr",
-				"app/controllers/api/users_controller.rb"
 			]
 		],
 		"width": 0.0
@@ -1582,7 +1582,7 @@
 	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 213.0,
 	"status_bar_visible": true,
 	"template_settings":

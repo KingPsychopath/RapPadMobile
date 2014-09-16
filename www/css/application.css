@@ -442,6 +442,37 @@ header {
   padding: 0 8px;
 }
 
+.all-privacy-settings {
+  width: 100%;
+  height: 0;
+  line-height: 32px;
+  padding: 0;
+  overflow: hidden;
+  -webkit-transition: height 250ms;
+}
+.all-privacy-settings button {
+  float: left;
+  border: 0;
+  width: 33.33%;
+  height: 100%;
+  text-align: center;
+  padding: 8px;
+  box-sizing: border-box;
+  color: #DE6A3D;
+}
+.all-privacy-settings button:last-child {
+  float: right;
+  width: 33.3%;
+}
+.all-privacy-settings button.active, .all-privacy-settings button:active {
+  background-color: #DE6A3D;
+  color: #FFF;
+}
+.all-privacy-settings.active {
+  height: 32px;
+  -webkit-transition: height 250ms;
+}
+
 .rhyme-suggestions {
   width: 100%;
   box-sizing: border-box;

@@ -4,7 +4,12 @@
 
 var Rap = Backbone.Model.extend({
   initialize: function() {
-    this.prettify();
+    if ('id' in this.attributes) {
+      this.prettify();
+    }
+    if ($.trim(this.attributes.title) === '') {
+      this.set('title', 'Untitled Rap');
+    }
   },
 
   // Add pretty-prints of certain attributes
@@ -15,6 +20,18 @@ var Rap = Backbone.Model.extend({
     if ('created_at' in this.attributes) {
       this.set('pretty_date', (new Date(this.attributes.created_at)).toDateString());
     }
+  },
+
+  // Prepares this rap to be newly created.
+  // Used in the syncing function.
+  getSafeAttributes: function() {
+    var obj = _.clone(this.attributes);
+    // Remove the unnecessary keys
+    delete obj['id'];
+    delete obj['word_count'];
+    delete obj['pretty_date'];
+    delete obj['created_at'];
+    return obj;
   },
 });
 
