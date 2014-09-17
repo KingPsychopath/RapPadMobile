@@ -31,6 +31,9 @@ html
 
 #app-main, header
   -webkit-backface-visibility: hidden
+  > div
+    width: 100%
+    overflow: hidden
 
 header
   display: -webkit-box
@@ -43,7 +46,8 @@ header
   background: $purple
 
 .bar-title
-  ~ .content
+  z-index: 999
+  ~ .content, ~ .navbar
     top: 44px
   .title
     position: absolute
@@ -84,7 +88,7 @@ header
   &.ios
     $ios-bar-height: 16px
     height: 44px + $ios-bar-height
-    ~ .content
+    ~ .content, ~ .navbar
       top: 44px + $ios-bar-height
     .prev-btn, .right-btn
       top: 10px + $ios-bar-height
@@ -98,6 +102,13 @@ header
   left: 0
   top: 0
   overflow: auto
+  overflow-x: hidden
+  opacity: 1
+  -webkit-transition: opacity 250ms
+  &.hidden
+    opacity: 0.5
+    overflow: hidden
+    -webkit-transition: opacity 250ms
 
 #loader
   position: absolute

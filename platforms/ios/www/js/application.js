@@ -143,6 +143,8 @@ var RapEditorView = Backbone.View.extend({
     'click #editor-delete'      : 'onDelete',
     'click #editor-find-rhymes' : 'onRhymeFind',
     'click .rhyme-suggestions'  : 'onRhymeSuggestionClick',
+    'click #privacy-settings'   : 'onTogglePrivacySettings',
+    'click .p-setting'          : 'onPrivacySettingClick',
     'keyup #editor-title'       : 'onUpdate',
     'keyup #editor-text'        : 'onUpdate',
   },
@@ -159,7 +161,27 @@ var RapEditorView = Backbone.View.extend({
     this.$el.append( this.template(this.model.attributes) );
     this.$el.find('#editor-title').val( this.model.get('title') );
     this.$el.find('#editor-text').val( this.model.get('lyrics') );
+    this.$el.find('.p-setting[data-value="' + this.model.get('visibility') + '"]')
+      .addClass('active');
     return this;
+  },
+
+  onPrivacySettingClick: function(evt) {
+    var $settingBtn   = $(evt.currentTarget);
+    var privacyValue  = $settingBtn.data('value');
+
+    $('.p-setting').removeClass('active');
+    this.model.set({ visibility: privacyValue });
+    $('.p-setting[data-value="' + privacyValue + '"]').addClass('active');
+  },
+
+  onTogglePrivacySettings: function() {
+    var $privacySettings = this.$el.find('.all-privacy-settings');
+    if ($privacySettings.hasClass('active')) {
+      $privacySettings.removeClass('active');
+    } else {
+      $privacySettings.addClass('active');
+    }
   },
 
   onRhymeSuggestionClick: function() {
@@ -277,16 +299,62 @@ var RapEditorView = Backbone.View.extend({
 
 });
 
+var DiscussView = Jr.View.extend({
+  template: _.template($('#v-discuss').html()),
+  mootCredentials: {},
+  events: {
+    'click #prev-btn': 'onBack',
+  },
+
+  onBack: function() {
+    navigateLeft('/dashboard');
+  },
+
+  initialize: function(options) {
+    this.mootCredentials = options.mootCredentials;
+  },
+
+  render: function() {
+    this.$el.html(this.template());
+    this.$el.find('#moot').muut(this.mootCredentials);
+    return this;
+  },
+});
+
 var DashboardView = Jr.View.extend({
   page: 0,
   limit: 25,
   raps_shown: 0,
 
   events: {
-    'click .show-more' : 'showMore',
-    'click .edit'      : 'editRap',
-    'click .sync-btn'  : 'syncRaps',
-    'click .write-btn' : 'newRap',
+    'click .show-more'    : 'showMore',
+    'click .edit'         : 'editRap',
+    'click .sync-btn'     : 'syncRaps',
+    'click .write-btn'    : 'newRap',
+    'click #other'        : 'other',
+    // Used in the nav menu
+    'click #nav-discuss'  : 'navDiscuss',
+  },
+
+  navDiscuss: function() {
+    navigateRight('/discuss');
+  },
+
+  clearNavbar: function() {
+    this.$el.find('.content').removeClass('hidden');
+    this.$el.find('#other i').removeClass('fa-remove').addClass('fa-navicon');
+    this.$el.find('.navbar').removeClass('active').unbind('click');
+  },
+
+  other: function(evt) {
+    var $navButton = this.$el.find('#other');
+    if ($navButton.find('i').hasClass('fa-navicon')) {
+      $navButton.find('i').removeClass('fa-navicon').addClass('fa-remove');
+      this.$el.find('.navbar').addClass('active');
+      this.$el.find('.content').addClass('hidden');
+    } else {
+      this.clearNavbar();
+    }
   },
 
   doneSync: function() {
@@ -360,7 +428,12 @@ var DashboardView = Jr.View.extend({
     $.ajax({
       url: RAPPAD_API_PATH + '/raps',
       type: 'GET',
-      data: { page: this.page, limit: this.limit },
+      data: {
+        page: this.page,
+        limit: this.limit,
+        user_email: App.getEmail(),
+        user_token: App.getToken(),
+      },
       success: function(response) {
         // Add the new raps to the collection
         _(response).each(function(element, index, list) {

@@ -1,10 +1,31 @@
 var AppRouter = Jr.Router.extend({
   routes: {
-    '': 'root',
-    'dashboard': 'dashboard',
-    'sign-in': 'signIn',
-    'raps/:id': 'rapShow',
-    'editor(/:id)': 'editor'
+    ''              : 'root',
+    'dashboard'     : 'dashboard',
+    'sign-in'       : 'signIn',
+    'raps/:id'      : 'rapShow',
+    'editor(/:id)'  : 'editor',
+    'discuss'       : 'discuss'
+  },
+
+  discuss: function() {
+    showLoader();
+    $.ajax({
+      url: RAPPAD_API_PATH + '/discuss',
+      type: 'GET',
+      data: {
+        user_email: App.getEmail(),
+        user_token: App.getToken(),
+      },
+      success: function(response) {
+        this.renderView(new DiscussView({ mootCredentials: response }));
+      }.bind(this),
+      error: function() {
+        alert('Failed to connect.');
+        navigateLeft('/dashboard');
+      },
+      complete: hideLoader
+    });
   },
 
   root: function() {
@@ -69,7 +90,7 @@ var AppRouter = Jr.Router.extend({
   },
 });
 
-Zepto(function($) {
+jQuery(function($) {
   var appRouter = window.appRouter = new AppRouter();
   Backbone.history.start();
   FastClick.attach(document.body);

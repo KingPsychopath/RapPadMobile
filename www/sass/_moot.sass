@@ -1,0 +1,116 @@
+.moot
+  color: $main-font-color
+  #moot-logo
+    width: 0
+    height: 0
+    overflow: hidden
+    opacity: 0
+    visibility: hidden
+    padding: 0
+    margin: 0
+  .m-myname
+    color: $main-font-color
+    &:hover
+    text-decoration: none
+  .m-icon, .m-anon-count
+    color: $gray
+    em
+      color: #FFF
+  .m-writing span
+    color: $main-font-color
+  .m-pagetitle div
+    color: $main-font-color
+    &::before
+      color: $gray
+  .m-select
+    .m-hovered
+      background: lighten($input-background, 1%)
+      border-radius: 0px
+  .m-navi a.m-selected
+    background: darken($input-background, 2%)
+  .m-links a
+    color: $yellow
+  #m-search
+    input
+      border-radius: 0
+      background: $input-field
+      border: 1px solid $input-field-border
+      color: $main-font-color
+      box-shadow: none
+    &:before
+      color: $gray
+  .m-header
+    background: $input-background
+  .m-login, .m-input-body, .m-input-title
+    color: $main-font-color
+  .m-navi a
+    color: $main-font-color
+  .m-input, #m-settings input, #m-settings textarea, .m-input-wrap, .m-postinput
+    box-shadow: none
+    border: 1px solid $form-line
+    background: $form
+    color: $main-font-color
+  .m-get-replies .m-to-tail:after, .m-more-moots:after
+    color: $purple
+  .m-heart.m-has-likes span
+    color: $red
+  .m-reply_count:before
+    color: $blue
+  .m-meta
+    color: $gray
+  #m-settings
+    li, li:last-child
+      background: $input-background
+  .m-options, .m-panel
+    background: $form
+  .m-moot .m-title, .m-title
+    color: $main-font-color
+  .m-button, button, .m-controls .m-button
+    background-color: $purple
+    color: white
+    box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.15)
+    outline: none
+    text-align: center
+    border: 0
+    border-radius: 0
+    &:hover
+      background-color: lighten($purple, 2%)
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.15), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.15)
+    &:active
+      box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.15), 0px 1px 0px 0px rgba(0, 0, 0, 0.15)
+      background-color: darken($purple, 2%)
+    &.disabled, &.disabled:hover
+      background-color: $gray
+      color: lighten($gray, 10%)
+      box-shadow: none
+      cursor: default
+  .m-page a
+    color: $yellow
+    text-decoration: none
+    &:hover
+      text-decoration: none
+      color: lighten($yellow, 20%)
+  .m-focused .m-input-wrap
+    box-shadow: none
+    border-color: $yellow
+  .m-post .m-body-wrap, .m-expanded .m-reply
+    border: 0
+  // Remove border hovers
+  .m-page .m-show-help, .m-controls .m-post-upload
+    border: 0
+    &:hover
+      border: 0
+  .m-get-replies
+    border-color: $gray
+    .m-to-head.m-button
+      &:before
+        color: $purple
+      &:hover
+        box-shadow: none
+        background-color: lighten($purple, 5%)
+    .m-to-tail.m-button
+      border: 0
+      &:hover
+        border: 0
+        box-shadow: none
+        background-color: lighten($purple, 5%)

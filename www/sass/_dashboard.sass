@@ -22,17 +22,19 @@
   line-height: 1.4em
 
 .navbar
-  position: absolute
+  position: relative
   left: 100%
-  top: 0
   width: 200px
-  height: 100%
   padding: 8px
+  height: 100%
   box-sizing: border-box
   background: $gray
   box-shadow: -1px 0px 10px 0px rgba(0, 0, 0, 0.5)
   border-left: 1px solid rgba(255, 255, 255, 0.1)
-  -webkit-transition: -webkit-transform 250ms cubic-bezier(0.770, 0.000, 0.175, 1.000)
+  z-index: 11
+  opacity: 0
+  overflow: hidden
+  -webkit-transition: -webkit-transform 250ms cubic-bezier(0.770, 0.000, 0.175, 1.000), opacity 250ms
   .info
     text-align: center
   .buttons
@@ -49,8 +51,9 @@
         background: $purple
         color: $main-font-color
   &.active
+    opacity: 1
     -webkit-transform: translateX(-200px)
-    -webkit-transition: -webkit-transform 250ms cubic-bezier(0.770, 0.000, 0.175, 1.000)
+    -webkit-transition: -webkit-transform 250ms cubic-bezier(0.770, 0.000, 0.175, 1.000), opacity 250ms
 
 .show-more
   border: 1px solid $main-font-color

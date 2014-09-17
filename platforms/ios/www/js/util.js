@@ -92,7 +92,7 @@ function genLocalRapId() {
       return this.attr('disabled', 'disabled').addClass('disabled');
     }
   })
-})(Zepto);
+})(jQuery);
 
 // Change Backbone/Underscore templating defaults
 _.templateSettings = {
@@ -100,26 +100,28 @@ _.templateSettings = {
 };
 
 // Append authentication details to each request, if possible.
-$(document).on('ajaxBeforeSend', function(e, xhr, options) {
-  if (App.userLoggedIn()) {
-    // GET request will need the params in the URL.
-    // ajaxBeforeSend fires AFTER the serialization check happens, so we manually do it here.
-    if (options.type.toUpperCase() === 'GET' || options.type.toUpperCase() === 'DELETE') {
-      var appendChar = options.url.indexOf('?') >= 0 ? '&' : '?';
-      options.url = [options.url,
-        appendChar,
-        $.param({ user_token: App.getToken(), user_email: App.getEmail() })
-      ].join('');
-    } else {
-      // Handle PUT and POST
-      if (options.data) {
-        try {
-          options.data = JSON.parse(options.data);
-          options.data['user_token'] = App.getToken();
-          options.data['user_email'] = App.getEmail();
-          options.data = JSON.stringify(options.data);
-        } catch (ex) {}
+$.ajaxSetup({
+  beforeSend: function(xhr, options) {
+    if (App.userLoggedIn()) {
+      // GET request will need the params in the URL.
+      // ajaxBeforeSend fires AFTER the serialization check happens, so we manually do it here.
+      if (options.type.toUpperCase() === 'GET' || options.type.toUpperCase() === 'DELETE') {
+        var appendChar = options.url.indexOf('?') >= 0 ? '&' : '?';
+        options.url = [options.url,
+          appendChar,
+          $.param({ user_token: App.getToken(), user_email: App.getEmail() })
+        ].join('');
+      } else {
+        // Handle PUT and POST
+        if (options.data) {
+          try {
+            options.data = JSON.parse(options.data);
+            options.data['user_token'] = App.getToken();
+            options.data['user_email'] = App.getEmail();
+            options.data = JSON.stringify(options.data);
+          } catch (ex) {}
+        }
       }
     }
-  }
+  },
 });

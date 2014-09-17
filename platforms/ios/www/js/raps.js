@@ -10,6 +10,10 @@ var Rap = Backbone.Model.extend({
     if ($.trim(this.attributes.title) === '') {
       this.set('title', 'Untitled Rap');
     }
+    // Default visibility to unlisted
+    if (!('visibility' in this.attributes)) {
+      this.set('visibility', 'unlisted');
+    }
   },
 
   // Add pretty-prints of certain attributes

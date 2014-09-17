@@ -5,18 +5,18 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-    <meta content="" name="csrf-token" />
     <!-- cordova requirements -->
     <script type="text/javascript" src="cordova.js"></script>
     <!-- libraries -->
     <script type="text/javascript" src="lib/js/modernizr.js"></script>
     <script type="text/javascript" src="lib/js/lodash.underscore.js"></script>
-    <script type="text/javascript" src="lib/js/zepto.js"></script>
-    <script type="text/javascript" src="lib/js/zepto.flickable.js"></script>
+    <script type="text/javascript" src="lib/js/jquery.js"></script>
     <script type="text/javascript" src="lib/js/backbone.js"></script>
     <script type="text/javascript" src="lib/js/junior.js"></script>
     <script type="text/javascript" src="lib/js/fastclick.js"></script>
     <script type="text/javascript" src="lib/js/backbone.localStorage.js"></script>
+    <script type="text/javascript" src="https://cdn.moot.it/1/moot.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.muut.com/1/moot.css" />
     <link type="text/css" rel="stylesheet" href="lib/css/junior.css" />
     <link type="text/css" rel="stylesheet" href="lib/css/font-awesome.css" />
     <!-- our app -->
@@ -80,10 +80,35 @@
       </div>
     </script>
 
+    <script id="v-discuss" type="template">
+      <header class="bar-title ios">
+        <div class="title">Discussion</div>
+        <button class="prev-btn" id="prev-btn">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+      </header>
+      <div class="content">
+        <a id="moot" href="https://moot.it/i/rappad/"></a>
+      </div>
+    </script>
+
     <script id="v-dashboard" type="template">
       <header class="bar-title ios">
         <div class="title">Dashboard</div>
+        <button class="right-btn" id="other">
+          <i class="fa fa-navicon"></i>
+        </button>
       </header>
+      <div class="navbar">
+        <div class="buttons">
+          <button id="nav-explore">Explore</button>
+          <button id="nav-discuss">Discuss</button>
+          <button id="nav-cypher">Cypher</button>
+        </div>
+        <div class="info">
+          www.rappad.co
+        </div>
+      </div>
       <div class="content">
         <div class="dashboard-sync"></div>
         <div class="padding-unit">
@@ -143,6 +168,12 @@
             <i class="fa fa-angle-double-left"></i>
             <div class="suggestions"></div><!--
             --><i class="fa fa-angle-double-right"></i>
+          </div>
+
+          <div class="all-privacy-settings">
+            <button class="p-setting" data-value="public">Public</button>
+            <button class="p-setting" data-value="private">Unlisted</button>
+            <button class="p-setting" data-value="unlisted">Private</button>
           </div>
 
           <input id="editor-title" type="text" value="Untitled Song" />

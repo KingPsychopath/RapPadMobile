@@ -299,20 +299,49 @@ var RapEditorView = Backbone.View.extend({
 
 });
 
+var DiscussView = Jr.View.extend({
+  template: _.template($('#v-discuss').html()),
+  mootCredentials: {},
+  events: {
+    'click #prev-btn': 'onBack',
+  },
+
+  onBack: function() {
+    navigateLeft('/dashboard');
+  },
+
+  initialize: function(options) {
+    this.mootCredentials = options.mootCredentials;
+  },
+
+  render: function() {
+    this.$el.html(this.template());
+    this.$el.find('#moot').muut(this.mootCredentials);
+    return this;
+  },
+});
+
 var DashboardView = Jr.View.extend({
   page: 0,
   limit: 25,
   raps_shown: 0,
 
   events: {
-    'click .show-more' : 'showMore',
-    'click .edit'      : 'editRap',
-    'click .sync-btn'  : 'syncRaps',
-    'click .write-btn' : 'newRap',
-    'click #other'     : 'other'
+    'click .show-more'    : 'showMore',
+    'click .edit'         : 'editRap',
+    'click .sync-btn'     : 'syncRaps',
+    'click .write-btn'    : 'newRap',
+    'click #other'        : 'other',
+    // Used in the nav menu
+    'click #nav-discuss'  : 'navDiscuss',
+  },
+
+  navDiscuss: function() {
+    navigateRight('/discuss');
   },
 
   clearNavbar: function() {
+    this.$el.find('.content').removeClass('hidden');
     this.$el.find('#other i').removeClass('fa-remove').addClass('fa-navicon');
     this.$el.find('.navbar').removeClass('active').unbind('click');
   },
@@ -322,6 +351,7 @@ var DashboardView = Jr.View.extend({
     if ($navButton.find('i').hasClass('fa-navicon')) {
       $navButton.find('i').removeClass('fa-navicon').addClass('fa-remove');
       this.$el.find('.navbar').addClass('active');
+      this.$el.find('.content').addClass('hidden');
     } else {
       this.clearNavbar();
     }
@@ -398,7 +428,12 @@ var DashboardView = Jr.View.extend({
     $.ajax({
       url: RAPPAD_API_PATH + '/raps',
       type: 'GET',
-      data: { page: this.page, limit: this.limit },
+      data: {
+        page: this.page,
+        limit: this.limit,
+        user_email: App.getEmail(),
+        user_token: App.getToken(),
+      },
       success: function(response) {
         // Add the new raps to the collection
         _(response).each(function(element, index, list) {

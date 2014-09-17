@@ -61,6 +61,10 @@ html {
 #app-main, header {
   -webkit-backface-visibility: hidden;
 }
+#app-main > div, header > div {
+  width: 100%;
+  overflow: hidden;
+}
 
 header {
   display: -webkit-box;
@@ -73,7 +77,10 @@ header {
   background: #56457D;
 }
 
-.bar-title ~ .content {
+.bar-title {
+  z-index: 999;
+}
+.bar-title ~ .content, .bar-title ~ .navbar {
   top: 44px;
 }
 .bar-title .title {
@@ -121,7 +128,7 @@ header {
 .bar-title.ios {
   height: 60px;
 }
-.bar-title.ios ~ .content {
+.bar-title.ios ~ .content, .bar-title.ios ~ .navbar {
   top: 60px;
 }
 .bar-title.ios .prev-btn, .bar-title.ios .right-btn {
@@ -138,6 +145,14 @@ header {
   left: 0;
   top: 0;
   overflow: auto;
+  overflow-x: hidden;
+  opacity: 1;
+  -webkit-transition: opacity 250ms;
+}
+.content.hidden {
+  opacity: 0.5;
+  overflow: hidden;
+  -webkit-transition: opacity 250ms;
 }
 
 #loader {
@@ -301,6 +316,46 @@ header {
   line-height: 1.4em;
 }
 
+.navbar {
+  position: relative;
+  left: 100%;
+  width: 200px;
+  padding: 8px;
+  height: 100%;
+  box-sizing: border-box;
+  background: #626262;
+  box-shadow: -1px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 11;
+  opacity: 0;
+  overflow: hidden;
+  -webkit-transition: -webkit-transform 250ms cubic-bezier(0.77, 0, 0.175, 1), opacity 250ms;
+}
+.navbar .info {
+  text-align: center;
+}
+.navbar .buttons {
+  border-bottom: 1px solid dimgray;
+  margin-bottom: 8px;
+}
+.navbar .buttons button {
+  width: 100%;
+  color: #EEE;
+  border: 0;
+  padding: 8px 0;
+  text-align: center;
+  font-size: 1.4em;
+}
+.navbar .buttons button:active {
+  background: #56457D;
+  color: #EEE;
+}
+.navbar.active {
+  opacity: 1;
+  -webkit-transform: translateX(-200px);
+  -webkit-transition: -webkit-transform 250ms cubic-bezier(0.77, 0, 0.175, 1), opacity 250ms;
+}
+
 .show-more {
   border: 1px solid #EEE;
   color: #EEE;
@@ -442,6 +497,37 @@ header {
   padding: 0 8px;
 }
 
+.all-privacy-settings {
+  width: 100%;
+  height: 0;
+  line-height: 32px;
+  padding: 0;
+  overflow: hidden;
+  -webkit-transition: height 250ms;
+}
+.all-privacy-settings button {
+  float: left;
+  border: 0;
+  width: 33.33%;
+  height: 100%;
+  text-align: center;
+  padding: 8px;
+  box-sizing: border-box;
+  color: #DE6A3D;
+}
+.all-privacy-settings button:last-child {
+  float: right;
+  width: 33.3%;
+}
+.all-privacy-settings button.active, .all-privacy-settings button:active {
+  background-color: #DE6A3D;
+  color: #FFF;
+}
+.all-privacy-settings.active {
+  height: 32px;
+  -webkit-transition: height 250ms;
+}
+
 .rhyme-suggestions {
   width: 100%;
   box-sizing: border-box;
@@ -521,6 +607,156 @@ header {
   border-top: 2px solid #FFF;
   padding: 8px;
   overflow: auto;
+}
+
+.moot {
+  color: #EEE;
+}
+.moot #moot-logo {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  padding: 0;
+  margin: 0;
+}
+.moot .m-myname {
+  color: #EEE;
+  text-decoration: none;
+}
+.moot .m-icon, .moot .m-anon-count {
+  color: #626262;
+}
+.moot .m-icon em, .moot .m-anon-count em {
+  color: #FFF;
+}
+.moot .m-writing span {
+  color: #EEE;
+}
+.moot .m-pagetitle div {
+  color: #EEE;
+}
+.moot .m-pagetitle div::before {
+  color: #626262;
+}
+.moot .m-select .m-hovered {
+  background: #333333;
+  border-radius: 0px;
+}
+.moot .m-navi a.m-selected {
+  background: #2b2b2b;
+}
+.moot .m-links a {
+  color: #D5C46A;
+}
+.moot #m-search input {
+  border-radius: 0;
+  background: #3f3f3f;
+  border: 1px solid #656565;
+  color: #EEE;
+  box-shadow: none;
+}
+.moot #m-search:before {
+  color: #626262;
+}
+.moot .m-header {
+  background: #303030;
+}
+.moot .m-login, .moot .m-input-body, .moot .m-input-title {
+  color: #EEE;
+}
+.moot .m-navi a {
+  color: #EEE;
+}
+.moot .m-input, .moot #m-settings input, .moot #m-settings textarea, .moot .m-input-wrap, .moot .m-postinput {
+  box-shadow: none;
+  border: 1px solid #2c2c2c;
+  background: #222;
+  color: #EEE;
+}
+.moot .m-get-replies .m-to-tail:after, .moot .m-more-moots:after {
+  color: #56457D;
+}
+.moot .m-heart.m-has-likes span {
+  color: #B24341;
+}
+.moot .m-reply_count:before {
+  color: #105994;
+}
+.moot .m-meta {
+  color: #626262;
+}
+.moot #m-settings li, .moot #m-settings li:last-child {
+  background: #303030;
+}
+.moot .m-options, .moot .m-panel {
+  background: #222;
+}
+.moot .m-moot .m-title, .moot .m-title {
+  color: #EEE;
+}
+.moot .m-button, .moot button, .moot .m-controls .m-button {
+  background-color: #56457D;
+  color: white;
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.15);
+  outline: none;
+  text-align: center;
+  border: 0;
+  border-radius: 0;
+}
+.moot .m-button:hover, .moot button:hover, .moot .m-controls .m-button:hover {
+  background-color: #5b4984;
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.15), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.15);
+}
+.moot .m-button:active, .moot button:active, .moot .m-controls .m-button:active {
+  box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.15), 0px 1px 0px 0px rgba(0, 0, 0, 0.15);
+  background-color: #514176;
+}
+.moot .m-button.disabled, .moot .m-button.disabled:hover, .moot button.disabled, .moot button.disabled:hover, .moot .m-controls .m-button.disabled, .moot .m-controls .m-button.disabled:hover {
+  background-color: #626262;
+  color: #7b7b7b;
+  box-shadow: none;
+  cursor: default;
+}
+.moot .m-page a {
+  color: #D5C46A;
+  text-decoration: none;
+}
+.moot .m-page a:hover {
+  text-decoration: none;
+  color: #ebe4ba;
+}
+.moot .m-focused .m-input-wrap {
+  box-shadow: none;
+  border-color: #D5C46A;
+}
+.moot .m-post .m-body-wrap, .moot .m-expanded .m-reply {
+  border: 0;
+}
+.moot .m-page .m-show-help, .moot .m-controls .m-post-upload {
+  border: 0;
+}
+.moot .m-page .m-show-help:hover, .moot .m-controls .m-post-upload:hover {
+  border: 0;
+}
+.moot .m-get-replies {
+  border-color: #626262;
+}
+.moot .m-get-replies .m-to-head.m-button:before {
+  color: #56457D;
+}
+.moot .m-get-replies .m-to-head.m-button:hover {
+  box-shadow: none;
+  background-color: #614e8d;
+}
+.moot .m-get-replies .m-to-tail.m-button {
+  border: 0;
+}
+.moot .m-get-replies .m-to-tail.m-button:hover {
+  border: 0;
+  box-shadow: none;
+  background-color: #614e8d;
 }
 
 /*# sourceMappingURL=application.css.map */
