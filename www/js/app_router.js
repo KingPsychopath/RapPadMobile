@@ -3,6 +3,7 @@ var AppRouter = Jr.Router.extend({
     ''              : 'root',
     'dashboard'     : 'dashboard',
     'sign-in'       : 'signIn',
+    'sign-up'       : 'signUp',
     'raps/:id'      : 'rapShow',
     'editor(/:id)'  : 'editor',
     'discuss'       : 'discuss',
@@ -88,6 +89,10 @@ var AppRouter = Jr.Router.extend({
 
   signIn: function() {
     this.renderView(new LoginAuthView());
+  },
+
+  signUp: function() {
+    this.renderView(new RegisterView());
   },
 
   dashboard: function(any) {

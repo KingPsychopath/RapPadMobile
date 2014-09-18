@@ -52,6 +52,57 @@ var LoginView = Jr.View.extend({
   },
 });
 
+var RegisterView = Jr.View.extend({
+  template: _.template( $('#v-register').html() ),
+  events: {
+    'click #prev-btn': 'onBack',
+    'click #register': 'onRegister',
+  },
+
+  onRegister: function() {
+    this.$el.find('#register').disable();
+    this.$el.find('#register').find('i')
+      .removeClass('fa-chevron-right').addClass('fa-spinner fa-spin');
+
+    $.ajax({
+      url: RAPPAD_API_PATH + '/sessions/sign_up',
+      type: 'POST',
+      data: {
+        email: $('#login-email').val(),
+        password: $('#login-password').val()
+      },
+      success: function(response) {
+        var userEmail = response.email;
+        var userToken = response.auth_token;
+
+        App.setEmail(userEmail);
+        App.setToken(userToken);
+
+        Jr.Navigator.navigate('/dashboard', {
+          trigger: true,
+          animation: {
+            type: Jr.Navigator.animations.SLIDE_STACK,
+            direction: Jr.Navigator.directions.LEFT
+          }
+        });
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        var errorJson = JSON.parse(xhr.responseText);
+        this.$el.find('.error-message').text('Failed: ' + buildErrorMessage(errorJson.error)).show();
+      }.bind(this),
+      complete: function() {
+        this.$el.find('#register').enable();
+        this.$el.find('#register i').removeClass('fa-spinner fa-spin').addClass('fa-chevron-right');
+      }.bind(this)
+    });
+  },
+
+  render: function() {
+    this.$el.html( this.template() );
+    return this;
+  },
+});
+
 var LoginAuthView = Jr.View.extend({
   events: {
     'click #prev-btn': 'onBack',
@@ -321,8 +372,27 @@ var DiscussView = Jr.View.extend({
   },
 });
 
+var ExploreEntryView = Jr.View.extend({
+  template: _.template($('#v-explore-entry').html()),
+  events: {
+  },
+
+  render: function() {
+    this.$el.html( this.template(this.model.attributes) );
+    return this;
+  },
+});
+
 var ExploreView = Jr.View.extend({
   template: _.template($('#v-explore').html()),
+  events: {
+    'click #prev-btn': 'onBack',
+  },
+
+  onBack: function() {
+    navigateLeft('/dashboard');
+  },
+
   render: function() {
     this.$el.html( this.template() );
     return this;
