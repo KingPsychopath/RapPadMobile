@@ -321,6 +321,14 @@ var DiscussView = Jr.View.extend({
   },
 });
 
+var ExploreView = Jr.View.extend({
+  template: _.template($('#v-explore').html()),
+  render: function() {
+    this.$el.html( this.template() );
+    return this;
+  },
+});
+
 var DashboardView = Jr.View.extend({
   page: 0,
   limit: 25,
@@ -334,6 +342,11 @@ var DashboardView = Jr.View.extend({
     'click #other'        : 'other',
     // Used in the nav menu
     'click #nav-discuss'  : 'navDiscuss',
+    'click #nav-explore'  : 'navExplore',
+  },
+
+  navExplore: function() {
+    navigateRight('/explore');
   },
 
   navDiscuss: function() {
@@ -351,7 +364,10 @@ var DashboardView = Jr.View.extend({
     if ($navButton.find('i').hasClass('fa-navicon')) {
       $navButton.find('i').removeClass('fa-navicon').addClass('fa-remove');
       this.$el.find('.navbar').addClass('active');
-      this.$el.find('.content').addClass('hidden');
+      this.$el.find('.content').addClass('hidden').one('click', function() {
+        this.clearNavbar();
+      }.bind(this));;
+
     } else {
       this.clearNavbar();
     }

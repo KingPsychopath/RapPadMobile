@@ -5,7 +5,12 @@ var AppRouter = Jr.Router.extend({
     'sign-in'       : 'signIn',
     'raps/:id'      : 'rapShow',
     'editor(/:id)'  : 'editor',
-    'discuss'       : 'discuss'
+    'discuss'       : 'discuss',
+    'explore'       : 'explore',
+  },
+
+  explore: function() {
+    this.renderView(new ExploreView());
   },
 
   discuss: function() {
