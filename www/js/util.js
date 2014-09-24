@@ -1,5 +1,19 @@
+var _ua             = navigator.userAgent.toLowerCase();
 var DEBUG           = true;
-var RAPPAD_API_PATH = DEBUG ? 'http://localhost:3000/api' : 'http://www.rappad.co/api';
+var IS_ANDROID      = _ua.indexOf('android') >= 0;
+var IS_IPHONE       = navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i);
+var RAPPAD_API_PATH = window.RAPPAD_API_PATH = DEBUG ? 'http://localhost:3000/api' : 'http://www.rappad.co/api';
+
+if (IS_ANDROID && DEBUG) {
+  RAPPAD_API_PATH = 'http://10.0.3.2:3000/api';
+}
+
+window.debug = function debug(message) {
+  if (DEBUG) {
+    $('#debug_console').show();
+    $('#debug_console').html( message );
+  }
+}
 
 function showLoader(message) {
   message = message || 'Loading...';

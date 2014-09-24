@@ -105,6 +105,12 @@ jQuery(function($) {
   Backbone.history.start();
   FastClick.attach(document.body);
 
+  if (IS_IPHONE) {
+    $('.app-container').addClass('ios')
+  } else if (IS_ANDROID) {
+    $('.app-container').addClass('android')
+  }
+
   // Skip the home page, go straight to dashboard if user is logged in.
   if (App.userLoggedIn()) {
     Jr.Navigator.navigate('/dashboard', { trigger: true });

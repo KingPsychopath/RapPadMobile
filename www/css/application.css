@@ -50,12 +50,35 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+#debug_console {
+  display: none;
+  width: 100%;
+  height: 64px;
+  background: white;
+  color: black;
+  position: fixed;
+  z-index: 7777;
+  bottom: 0;
+}
+
 #app-container {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+}
+#app-container.ios .bar-title {
+  height: 60px;
+}
+#app-container.ios .bar-title ~ .content, #app-container.ios .bar-title ~ .navbar {
+  top: 60px;
+}
+#app-container.ios .bar-title .prev-btn, #app-container.ios .bar-title .right-btn {
+  top: 26px;
+}
+#app-container.ios .bar-title .title {
+  top: 24px;
 }
 
 #app-main, header {
@@ -124,18 +147,6 @@ header {
 .bar-title .prev-btn:active {
   -webkit-transform: scale(0.8);
   outline: none;
-}
-.bar-title.ios {
-  height: 60px;
-}
-.bar-title.ios ~ .content, .bar-title.ios ~ .navbar {
-  top: 60px;
-}
-.bar-title.ios .prev-btn, .bar-title.ios .right-btn {
-  top: 26px;
-}
-.bar-title.ios .title {
-  top: 24px;
 }
 
 .content {
@@ -259,6 +270,7 @@ header {
   display: block;
   color: #FFF;
   margin-bottom: 1em;
+  width: 100%;
 }
 .auth-field .auth-icon {
   width: 32px;
