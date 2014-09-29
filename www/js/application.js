@@ -356,7 +356,16 @@ var DiscussView = Jr.View.extend({
   template: _.template($('#v-discuss').html()),
   mootCredentials: {},
   events: {
-    'click #prev-btn': 'onBack',
+    'click #prev-btn'    : 'onBack',
+    'click .m-postinput' : 'refocus',
+  },
+
+  refocus: function(evt) {
+    var whichTextbox = $(evt.currentTarget)
+    setTimeout(function() {
+      whichTextbox.blur();
+      whichTextbox.prop('disabled', false).focus();
+    }.bind(this), 3000);
   },
 
   onBack: function() {

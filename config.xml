@@ -11,4 +11,5 @@
     <access origin="*" />
     <icon src="res/icon.png" />
     <preference name="DisallowOverscroll" value="true" />
+    <preference name="orientation" value="portrait" />
 </widget>

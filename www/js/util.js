@@ -25,7 +25,7 @@ function showLoader(message) {
   }
 
   var loaderHtml = $('#v-loader').html();
-  $('.content').prepend( loaderHtml );
+  $('#app-main').prepend( loaderHtml );
   setTimeout(function() {
     $('#loader').addClass('animate-in');
     $('#loader').find('p').text(message);
