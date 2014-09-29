@@ -106,9 +106,11 @@ jQuery(function($) {
   FastClick.attach(document.body);
 
   if (IS_IPHONE) {
-    $('.app-container').addClass('ios')
+    $('.app-container').addClass('ios');
+    $('body').addClass('ios');
   } else if (IS_ANDROID) {
-    $('.app-container').addClass('android')
+    $('.app-container').addClass('android');
+    $('body').addClass('android');
   }
 
   // Skip the home page, go straight to dashboard if user is logged in.

@@ -27,3 +27,9 @@ This section is for me to record how to do certain things.
 0. `cordova build android --release`
 1. `jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore rappad-mobile.keystore platforms/android/ant-build/Rappad-release-unsigned.apk rp_mobile`
 2. `/Users/amirsharif/android-sdk-macosx/build-tools/19.1.0/zipalign -v 4 platforms/android/ant-build/Rappad-release-unsigned.apk rappad_release.apk`
+
+All together:
+
+```
+rm rappad_release.apk && cordova build android --release && jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore rappad-mobile.keystore platforms/android/ant-build/Rappad-release-unsigned.apk rp_mobile && /Users/amirsharif/android-sdk-macosx/build-tools/19.1.0/zipalign -v 4 platforms/android/ant-build/Rappad-release-unsigned.apk rappad_release.apk
+```

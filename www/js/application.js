@@ -99,6 +99,7 @@ var RegisterView = Jr.View.extend({
 
   render: function() {
     this.$el.html( this.template() );
+    this.$el.find('#login-email').focus();
     return this;
   },
 });
@@ -111,6 +112,7 @@ var LoginAuthView = Jr.View.extend({
 
   render: function() {
     this.$el.html( $('#v-login-auth').html() );
+    this.$el.find('#login-name').focus();
     return this;
   },
 
@@ -140,7 +142,7 @@ var LoginAuthView = Jr.View.extend({
           }
         });
       },
-      error: function() {
+      error: function(xhr, textStatus, errorShown) {
         $('.error-message').show();
       },
       complete: function() {
