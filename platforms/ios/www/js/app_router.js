@@ -3,9 +3,15 @@ var AppRouter = Jr.Router.extend({
     ''              : 'root',
     'dashboard'     : 'dashboard',
     'sign-in'       : 'signIn',
+    'sign-up'       : 'signUp',
     'raps/:id'      : 'rapShow',
     'editor(/:id)'  : 'editor',
-    'discuss'       : 'discuss'
+    'discuss'       : 'discuss',
+    'explore'       : 'explore',
+  },
+
+  explore: function() {
+    this.renderView(new ExploreView());
   },
 
   discuss: function() {
@@ -85,6 +91,10 @@ var AppRouter = Jr.Router.extend({
     this.renderView(new LoginAuthView());
   },
 
+  signUp: function() {
+    this.renderView(new RegisterView());
+  },
+
   dashboard: function(any) {
     this.renderView(new DashboardView());
   },
@@ -94,6 +104,14 @@ jQuery(function($) {
   var appRouter = window.appRouter = new AppRouter();
   Backbone.history.start();
   FastClick.attach(document.body);
+
+  if (IS_IPHONE) {
+    $('.app-container').addClass('ios');
+    $('body').addClass('ios');
+  } else if (IS_ANDROID) {
+    $('.app-container').addClass('android');
+    $('body').addClass('android');
+  }
 
   // Skip the home page, go straight to dashboard if user is logged in.
   if (App.userLoggedIn()) {

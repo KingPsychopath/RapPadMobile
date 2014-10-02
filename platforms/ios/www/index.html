@@ -25,7 +25,8 @@
   <body ontouchstart>
     <noscript>You appear to have Javascript disabled on your device. Please go to your device settings in order to access RapPad.</noscript>
 
-    <div id="sidebar">
+    <div id="debug_console">
+      ... This isn't working
     </div>
 
     <!-- all templates get loaded in here -->
@@ -37,17 +38,46 @@
     <!-- templates -->
     <script id="v-login" type="template">
       <div class="content">
-        <h1 class="rp-login-header">
-          R<span class="smaller">ap</span>P<span class="smaller">ad</span>
-        </h1>
-        <button id="sign-in" class="rp-login-btn first">
-          Login
-          <i class="pull-right fa fa-chevron-right"></i>
-        </button>
-        <button id="sign-up" class="rp-login-btn">
-          Register
-          <i class="pull-right fa fa-chevron-right"></i>
-        </button>
+        <div class="app-splash">
+          <h1 class="rp-login-header">
+            R<span class="smaller">ap</span>P<span class="smaller">ad</span>
+          </h1>
+          <button id="sign-in" class="rp-login-btn first">
+            Login
+            <i class="pull-right fa fa-chevron-right"></i>
+          </button>
+          <button id="sign-up" class="rp-login-btn first">
+            Register
+            <i class="pull-right fa fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </script>
+
+    <script id="v-register" type="template">
+      <header class="bar-title ios">
+        <button class="prev-btn" id="prev-btn"><i class="fa fa-chevron-left"></i> </button>
+        <div class="title">Sign Up</div>
+      </header>
+      <div class="content">
+        <div class="padding-unit">
+          <div class="error-message"></div>
+
+          <div class="auth-field">
+            <div class="auth-icon"><i class="fa fa-user"></i></div><!--
+            --><input id="login-email" type="textbox" placeholder="Email"/>
+          </div>
+
+          <div class="auth-field">
+            <div class="auth-icon"><i class="fa fa-key"></i></div><!--
+            --><input id="login-password" type="password" placeholder="Password" />
+          </div>
+
+          <button id="register" class="rp-login-btn login-auth">
+            Sign Up
+            <i class="pull-right fa fa-chevron-right"></i>
+          </button>
+        </div>
       </div>
     </script>
 
@@ -101,9 +131,7 @@
       </header>
       <div class="navbar">
         <div class="buttons">
-          <button id="nav-explore">Explore</button>
           <button id="nav-discuss">Discuss</button>
-          <button id="nav-cypher">Cypher</button>
         </div>
         <div class="info">
           www.rappad.co
@@ -203,6 +231,28 @@
           </div>
         </div>
       </li>
+    </script>
+
+    <script id="v-explore-entry" type="template">
+      <div class="explore-entry">
+        <div class="rap">
+        </div>
+        <div class="artist">
+          <img alt="artist-picture" />
+          <span>Written by {{ username }}</span>
+        </div>
+      </div>
+    </script>
+
+    <script id="v-explore" type="template">
+      <header class="bar-title ios">
+        <div class="title">Explore</div>
+        <button class="prev-btn" id="prev-btn">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+      </header>
+      <div class="content">
+      </div>
     </script>
 
     <script id="v-loader" type="template">

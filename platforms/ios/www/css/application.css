@@ -50,12 +50,35 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+#debug_console {
+  display: none;
+  width: 100%;
+  height: 64px;
+  background: white;
+  color: black;
+  position: fixed;
+  z-index: 7777;
+  bottom: 0;
+}
+
 #app-container {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+}
+#app-container.ios .bar-title {
+  height: 60px;
+}
+#app-container.ios .bar-title ~ .content, #app-container.ios .bar-title ~ .navbar {
+  top: 60px;
+}
+#app-container.ios .bar-title .prev-btn, #app-container.ios .bar-title .right-btn {
+  top: 26px;
+}
+#app-container.ios .bar-title .title {
+  top: 24px;
 }
 
 #app-main, header {
@@ -125,18 +148,6 @@ header {
   -webkit-transform: scale(0.8);
   outline: none;
 }
-.bar-title.ios {
-  height: 60px;
-}
-.bar-title.ios ~ .content, .bar-title.ios ~ .navbar {
-  top: 60px;
-}
-.bar-title.ios .prev-btn, .bar-title.ios .right-btn {
-  top: 26px;
-}
-.bar-title.ios .title {
-  top: 24px;
-}
 
 .content {
   position: fixed;
@@ -161,7 +172,7 @@ header {
   left: 0;
   background: rgba(0, 0, 0, 0.35);
   text-align: center;
-  z-index: 999;
+  z-index: 9999;
   width: 100%;
   height: 200%;
   opacity: 0;
@@ -209,12 +220,19 @@ header {
   margin-top: 1em;
 }
 
+.app-splash {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  -webkit-transform: translateY(-50%);
+}
+
 .rp-login-header {
   font-family: "BebasNeueRegular", "Arial", sans-serif;
   font-weight: normal;
   font-size: 4em;
   text-align: center;
-  margin: 14px 0;
+  margin: 0 0 16px 0;
   text-shadow: 1px 1px 2px #000;
 }
 .rp-login-header .smaller {
@@ -259,6 +277,7 @@ header {
   display: block;
   color: #FFF;
   margin-bottom: 1em;
+  width: 100%;
 }
 .auth-field .auth-icon {
   width: 32px;
@@ -333,6 +352,7 @@ header {
 }
 .navbar .info {
   text-align: center;
+  color: #959595;
 }
 .navbar .buttons {
   border-bottom: 1px solid dimgray;
