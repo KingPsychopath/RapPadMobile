@@ -24,6 +24,9 @@ var AppRouter = Jr.Router.extend({
         user_token: App.getToken(),
       },
       success: function(response) {
+        // This may help?
+        response.widget = true;
+
         this.renderView(new DiscussView({ mootCredentials: response }));
       }.bind(this),
       error: function() {
