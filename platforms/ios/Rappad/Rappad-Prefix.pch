@@ -17,7 +17,7 @@
  under the License.
  */
 //
-// Prefix header for all source files of the 'RapPadMobile' target in the 'RapPadMobile' project
+// Prefix header for all source files of the 'Rappad' target in the 'Rappad' project
 //
 
 #ifdef __OBJC__

@@ -32,9 +32,9 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="orientation" value="portrait" />
     <gap:config-file parent="CFBundleVersion" platform="ios">
-        <string>517</string>
+        <string>1.0.0</string>
     </gap:config-file>
     <gap:config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>1.0</string>
+        <string>100</string>
     </gap:config-file>
 </widget>
