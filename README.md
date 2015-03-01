@@ -1,9 +1,5 @@
 # RapPad Mobile
 
-## RapPad Mobile is in active development.
-
-This repo will change almost everyday. If you are interesting in helping develop, send me a note amir@rappad.co . Otherwise feel free to browse around.
-
 ### Getting started
 
 RapPad Mobile is the official mobile app for [RapPad](www.rappad.co). You can download it on the Google Play or iTunes (eventually).
